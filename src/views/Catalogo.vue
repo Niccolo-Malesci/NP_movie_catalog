@@ -114,7 +114,7 @@ export default {
     },
 
     handleSearchInput() {
-      if (this.searchQuery.length >= 3) {
+      if (this.searchQuery.length >= 2) {
       this.currentPage = 1;
       this.fetchMovies();
       }
