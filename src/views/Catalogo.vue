@@ -125,6 +125,11 @@ export default {
 </script>
 
 <style>
+.card-img-top {
+  height: 450px;
+  object-fit: cover;
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
