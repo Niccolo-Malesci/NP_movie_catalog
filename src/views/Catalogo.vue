@@ -33,6 +33,15 @@
   import axios from 'axios';
   
   export default {
+    beforeRouteEnter(to, from, next) {
+    if (to.name === 'catalogo') {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'src\assets\catalogo.css';
+      document.head.appendChild(link);
+    }
+    next();
+    },
     data() {
       return {
         movies: [],
@@ -108,14 +117,14 @@
   };
   </script>
   
-  <style scoped>
-  .catalogo {
+  <style>
+  /*.catalogo {
     font-size: 24px;
     margin-bottom: 40px;
     text-align: center;
     color: #333;
     padding: 20px;
-    background-color: #f5f5f5;
+    background-color: purple;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   }
@@ -195,6 +204,5 @@
     background-color: #e50914;
     font-weight: bold;
     color: #fff;
-  }
-  
+  }*/
   </style>

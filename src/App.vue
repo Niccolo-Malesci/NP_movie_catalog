@@ -1,7 +1,5 @@
 <template>
-  <div class="app">
-    <router-view></router-view>
-  </div>
+    <RouterView></RouterView>
 </template>
 
 <script>
@@ -9,5 +7,5 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 </style>
