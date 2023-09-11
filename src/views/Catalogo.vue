@@ -11,7 +11,7 @@
       <button @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie TV</button>
     </div>
 
-    <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
+    <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input"/>
     <div v-if="movies.length" class="movie-list">
       <div v-for="movie in movies" :key="movie.id">
         <div class="card" style="width: 15%;">
@@ -122,6 +122,12 @@ import axios from 'axios';
 </script>
   
 <style>
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+  }
   /*.catalogo {
     font-size: 24px;
     margin-bottom: 40px;
