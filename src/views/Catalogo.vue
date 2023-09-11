@@ -14,7 +14,7 @@
     <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
     <div v-if="movies.length" class="movie-list">
       <div v-for="movie in movies" :key="movie.id">
-        <div class="card" style="width: 15rem;">
+        <div class="card" style="width: 16rem;">
           <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
             <div class="card-body">
               <h5 class="card-title">{{ movie.title }}</h5>
@@ -33,8 +33,8 @@
   </nav>
 </template>
   
-  <script>
-  import axios from 'axios';
+<script>
+import axios from 'axios';
   
   export default {
    /* beforeRouteEnter(to, from, next) {
@@ -119,9 +119,9 @@
       },
     },
   };
-  </script>
+</script>
   
-  <style>
+<style>
   /*.catalogo {
     font-size: 24px;
     margin-bottom: 40px;
@@ -201,4 +201,4 @@
     font-weight: bold;
     color: #fff;
   }
-  </style>
+</style>
