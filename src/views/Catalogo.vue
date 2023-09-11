@@ -1,20 +1,20 @@
 <template>
-    <nav class="navbar bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand">Catalogo</a>
-      </div>
-      <div class="position-absolute top-0 end-0">
-        <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button>
-      </div>
-      <div class="position-absolute top-1 end-0">
-        <button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button>
-        <button @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie TV</button>
-      </div>
-      <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
-    </nav>
-    <div v-if="movies.length" class = "movie-list">
-    <div v-for="movie in movies" :key="movie.id" class="movie-list">
-      <div class="card" style="width: 15%;">
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand">Catalogo</a>
+    </div>
+    <div class="position-absolute top-0 end-0">
+      <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button>
+    </div>
+    <div class="position-absolute top-1 end-0">
+      <button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button>
+      <button @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie TV</button>
+    </div>
+    <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
+  </nav>
+  <div v-if="movies.length" class="movie-list">
+    <div v-for="movie in movies" :key="movie.id" class="movie-item">
+      <div class="card">
         <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
         <div class="card-body">
           <h5 class="card-title">{{ movie.title }}</h5>
@@ -25,11 +25,11 @@
         </ul>
       </div>
     </div>
-    <div class="pagination-buttons">
-      <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
-      <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
-    </div>
-    </div>
+  </div>
+  <div class="pagination-buttons">
+    <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
+    <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
+  </div>
 </template>
 
 <script>
@@ -60,8 +60,8 @@ export default {
       let url2 = `https://api.themoviedb.org/3/search/${category}?api_key=${apiKey}&language=${language}&page=${page}${query ? `&query=${query}` : ''}`;
 
       if (this.searchQuery) {
-      url = url2;
-    }
+        url = url2;
+      }
 
       axios
         .get(url)
@@ -70,10 +70,7 @@ export default {
           this.movies = response.data.results.map((movie) => {
             return {
               ...movie,
-              overview: this.getTranslatedOverview(
-                movie.overview,
-                this.currentLanguage
-              ),
+              overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
             };
           });
         })
@@ -82,10 +79,10 @@ export default {
         });
     },
     setCurrentCategory(category) {
-    this.currentCategory = category;
-    this.currentPage = 1;
-    this.searchQuery = ''; 
-    this.fetchMovies();
+      this.currentCategory = category;
+      this.currentPage = 1;
+      this.searchQuery = ''; 
+      this.fetchMovies();
     },
     fetchPrevMovies() {
       if (this.currentPage > 1) {
@@ -115,8 +112,8 @@ export default {
 
     handleSearchInput() {
       if (this.searchQuery.length >= 2) {
-      this.currentPage = 1;
-      this.fetchMovies();
+        this.currentPage = 1;
+        this.fetchMovies();
       }
       if (this.searchQuery.length === 0) {
         this.currentPage = 1;
@@ -126,84 +123,56 @@ export default {
   },
 };
 </script>
-  <style>
-  /*.catalogo {
-    font-size: 24px;
-    margin-bottom: 40px;
-    text-align: center;
-    color: #333;
-    padding: 20px;
-    background-color: purple;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  }
-  
-  .movie-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .movie-item {
-    display: flex;
-    margin-bottom: 20px;
-    align-items: flex-start;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  }
-  
-  .movie-poster {
-    max-width: 150px;
-    margin-right: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  }
-  
-  .movie-title {
-    font-size: 20px;
-    margin: 0;
-    color: #333;
-  }
-  
-  .movie-release-date {
-    font-size: 16px;
-    margin: 0;
-    color: #777;
-  }
-  
-  .movie-overview {
-    font-size: 16px;
-    color: #555;
-  }*/
-  .pagination-buttons {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .pagination-button {
-    background-color: #e50914;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin-right: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  .search-input {
-    margin-bottom: 20px;
-    padding: 10px;
-    font-size: 18px;
-    width: 87%;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  button.active {
-    background-color: #e50914;
-    font-weight: bold;
-    color: #fff;
-  }
-  </style>
+
+<style>
+.container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+}
+
+.movie-item {
+  width: 100%;
+}
+
+.card {
+  width: 100%;
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+}
+
+.pagination-buttons {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination-button {
+  background-color: #e50914;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.search-input {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 18px;
+  width: 87%;
+  border: none;
+  border-radius: 5px;
+}
+
+button.active {
+  background-color: #e50914;
+  font-weight: bold;
+  color: #fff;
+}
+</style>
