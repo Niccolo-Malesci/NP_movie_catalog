@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  beforeRouteEnter(to, from, next) {
+  /*beforeRouteEnter(to, from, next) {
     if (to.name === 'registrazione') {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
@@ -44,7 +44,7 @@ export default {
       document.head.appendChild(link);
     }
     next();
-    },
+    },*/
   data () {
     return {
       nome_registrazione: '',

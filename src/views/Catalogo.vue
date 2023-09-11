@@ -1,6 +1,16 @@
 <template>
-    <div class="catalogo">
-      <h1>Catalogo</h1>
+    <nav class="navbar bg-body-tertiary" >
+  <div class="container-fluid">
+    <a class="navbar-brand">Catalogo</a>
+      </div>
+      <div class="position-absolute top-0 end-0">
+        <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button>
+      </div>
+      <div class="position-absolute top-1 end-0">
+        <button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button>
+        <button @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie TV</button>
+      </div>
+
       <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
       <div v-if="movies.length" class="movie-list">
         <ul>
@@ -15,25 +25,15 @@
           <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
           <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
         </div>
-      </div>
-      <div v-else>
-        <p class="loading-text">Caricamento in corso...</p>
-      </div>
-      <div>
-        <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button>
-      </div>
-      <div>
-        <button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button>
-        <button @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie TV</button>
-      </div>
-    </div>
+  </div>
+</nav>
   </template>
   
   <script>
   import axios from 'axios';
   
   export default {
-    beforeRouteEnter(to, from, next) {
+   /* beforeRouteEnter(to, from, next) {
     if (to.name === 'catalogo') {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
@@ -41,7 +41,7 @@
       document.head.appendChild(link);
     }
     next();
-    },
+    },*/
     data() {
       return {
         movies: [],
@@ -166,8 +166,7 @@
   .movie-overview {
     font-size: 16px;
     color: #555;
-  }
-  
+  }*/
   .pagination-buttons {
     margin-top: 20px;
     text-align: center;
@@ -184,18 +183,11 @@
     font-size: 16px;
   }
   
-  .loading-text {
-    font-size: 20px;
-    margin: 20px 0;
-    text-align: center;
-    color: #555;
-  }
-  
   .search-input {
     margin-bottom: 20px;
     padding: 10px;
     font-size: 18px;
-    width: 100%;
+    width: 87%;
     border: none;
     border-radius: 5px;
   }
@@ -204,5 +196,5 @@
     background-color: #e50914;
     font-weight: bold;
     color: #fff;
-  }*/
+  }
   </style>
