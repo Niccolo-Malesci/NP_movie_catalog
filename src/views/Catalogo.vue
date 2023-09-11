@@ -1,39 +1,37 @@
 <template>
-    <nav class="navbar bg-body-tertiary" >
-  <div class="container-fluid">
-    <a class="navbar-brand">Catalogo</a>
-      </div>
-      <div class="position-absolute top-0 end-0">
-        <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button>
-      </div>
-      <div class="position-absolute top-1 end-0">
-        <button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button>
-        <button @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie TV</button>
-      </div>
+  <nav class="navbar bg-body-tertiary" >
+    <div class="container-fluid">
+      <a class="navbar-brand">Catalogo</a>
+    </div>
+    <div class="position-absolute top-0 end-0">
+      <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button>
+    </div>
+    <div class="position-absolute top-1 end-0">
+      <button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button>
+      <button @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie TV</button>
+    </div>
 
-      <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
-      <div v-if="movies.length" class="movie-list">
-        <ul>
-          <li v-for="movie in movies" :key="movie.id">
-            <div class="card" style="width: 15rem;">
-              <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
-              <div class="card-body">
-                <h5 class="card-title">{{ movie.title }}</h5>
-                  <p class="card-text">{{ movie.overview }}</p>
-              </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">{{ movie.release_date }}</li>
-        </ul>
+    <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
+    <div v-if="movies.length" class="movie-list">
+      <div v-for="movie in movies" :key="movie.id">
+        <div class="card" style="width: 15rem;">
+          <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{ movie.title }}</h5>
+                <p class="card-text">{{ movie.overview }}</p>
             </div>
-          </li>
-        </ul>
-        <div class="pagination-buttons">
-          <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
-          <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
+            <div class="list-group list-group-flush">
+              <div class="list-group-item">{{ movie.release_date }}></div>
+            </div>
         </div>
-  </div>
-</nav>
-  </template>
+      </div>
+      <div class="pagination-buttons">
+        <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
+        <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
+      </div>
+    </div>
+  </nav>
+</template>
   
   <script>
   import axios from 'axios';
