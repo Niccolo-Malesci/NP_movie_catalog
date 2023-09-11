@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <nav class="navbar bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand">Catalogo</a>
+    <nav class="navbar bg-body-tertiary" >
+  <div class="container-fluid">
+    <a class="navbar-brand">Catalogo</a>
       </div>
       <div class="position-absolute top-0 end-0">
         <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button>
@@ -13,108 +12,116 @@
       </div>
 
       <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
-    </nav>
-
-    <div class="movie-list">
-      <ul>
-        <li v-for="movie in movies" :key="movie.id">
-          <div class="card" style="width: 15rem;">
-            <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.overview }}</p>
+      <div v-if="movies.length" class="movie-list">
+        <ul>
+          <li v-for="movie in movies" :key="movie.id">
+            <div class="card" style="width: 15rem;">
+              <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                  <p class="card-text">{{ movie.overview }}</p>
+              </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{ movie.release_date }}</li>
+        </ul>
             </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">{{ movie.release_date }}</li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="pagination-buttons">
-      <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
-      <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
-    </div>
+          </li>
+        </ul>
+        <div class="pagination-buttons">
+          <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
+          <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
+        </div>
   </div>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      movies: [],
-      currentPage: 1,
-      totalPages: 1,
-      currentLanguage: 'it',
-      searchQuery: '',
-      currentCategory: 'movie',
-    };
-  },
-  created() {
-    this.fetchMovies();
-  },
-  methods: {
-  fetchMovies() {
-    const apiKey = '512f81af17888b517a1b456fbce07689';
-    const language = this.currentLanguage;
-    const page = this.currentPage;
-    const url = `https://api.themoviedb.org/3/trending/${this.currentCategory}/week?page=${page}&api_key=${apiKey}&language=${language}`;
-
-    axios
-      .get(url)
-      .then((response) => {
-        this.totalPages = response.data.total_pages;
-        this.movies = response.data.results.map((movie) => {
-          return {
-            ...movie,
-            overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
-          };
-        });
-      })
-      .catch((error) => {
-        console.error('Errore durante il recupero dei film/serie TV:', error);
-      });
-  },
-    setCurrentCategory(category) {
-      this.currentCategory = category;
-      this.currentPage = 1;
+</nav>
+  </template>
+  
+  <script>
+  import axios from 'axios';
+  
+  export default {
+   /* beforeRouteEnter(to, from, next) {
+    if (to.name === 'catalogo') {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'src\assets\catalogo.css';
+      document.head.appendChild(link);
+    }
+    next();
+    },*/
+    data() {
+      return {
+        movies: [],
+        currentPage: 1,
+        totalPages: 0,
+        currentLanguage: 'it',
+        searchQuery: '',
+        currentCategory: 'movie',
+      };
+    },
+    created() {
       this.fetchMovies();
     },
-    fetchPrevMovies() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
+    methods: {
+      fetchMovies() {
+        const apiKey = '512f81af17888b517a1b456fbce07689';
+        const language = this.currentLanguage;
+        const page = this.currentPage;
+        const query = this.searchQuery;
+        const category = this.currentCategory;
+  
+        axios
+          .get(
+            `https://api.themoviedb.org/3/search/${category}?api_key=${apiKey}&language=${language}&page=${page}${query ? `&query=${query}` : ''}`
+          )
+          .then((response) => {
+            this.totalPages = response.data.total_pages;
+            this.movies = response.data.results.map((movie) => {
+              return {
+                ...movie,
+                overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
+              };
+            });
+          })
+          .catch((error) => {
+            console.error('Errore durante il recupero dei film/serie TV:', error);
+          });
+      },
+      setCurrentCategory(category) {
+        this.currentCategory = category;
         this.fetchMovies();
-      }
-    },
-    fetchNextMovies() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
+      },
+      fetchPrevMovies() {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+          this.fetchMovies();
+        }
+      },
+      fetchNextMovies() {
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+          this.fetchMovies();
+        }
+      },
+      toggleLanguage() {
+        this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
         this.fetchMovies();
-      }
+      },
+      getMoviePosterUrl(posterPath) {
+        if (!posterPath) {
+          return '';
+        }
+        return `https://image.tmdb.org/t/p/w500/${posterPath}`;
+      },
+      getTranslatedOverview(overview, language) {
+        return overview;
+      },
+      handleSearchInput() {
+        this.currentPage = 1;
+        this.fetchMovies();
+      },
     },
-    toggleLanguage() {
-      this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
-      this.fetchMovies();
-    },
-    getMoviePosterUrl(posterPath) {
-      if (!posterPath) {
-        return '';
-      }
-      return `https://image.tmdb.org/t/p/w500/${posterPath}`;
-    },
-    getTranslatedOverview(overview, language) {
-      return overview;
-    },
-    handleSearchInput() {
-      this.currentPage = 1;
-      this.fetchMovies();
-    },
-  },
-};
-</script>
+  };
+  </script>
   
   <style>
   /*.catalogo {
