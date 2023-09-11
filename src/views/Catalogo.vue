@@ -12,19 +12,19 @@
         <button @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie TV</button>
       </div>
 
-    <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
-    <div v-if="movies.length" class="movie-list">
-      <div v-for="movie in movies" :key="movie.id">
-        <div class="card" style="width: 15rem;">
-          <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-                <p class="card-text">{{ movie.overview }}</p>
-            </div>
-            <div class="list-group list-group-flush">
-              <div class="list-group-item">{{ movie.release_date }}></div>
-            </div>
+      <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
+    </nav>
+
+    <div v-for="movie in movies" :key="movie.id" class="movie-list">
+      <div class="card" style="width: 15rem;">
+        <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">{{ movie.title }}</h5>
+          <p class="card-text">{{ movie.overview }}</p>
         </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{ movie.release_date }}</li>
+        </ul>
       </div>
     </div>
 
@@ -34,95 +34,91 @@
     </div>
   </div>
 </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-   /* beforeRouteEnter(to, from, next) {
-    if (to.name === 'catalogo') {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'src\assets\catalogo.css';
-      document.head.appendChild(link);
-    }
-    next();
-    },*/
-    data() {
-      return {
-        movies: [],
-        currentPage: 1,
-        totalPages: 0,
-        currentLanguage: 'it',
-        searchQuery: '',
-        currentCategory: 'movie',
-      };
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      movies: [],
+      currentPage: 1,
+      totalPages: 1,
+      currentLanguage: 'it',
+      searchQuery: '',
+      currentCategory: 'movie',
+    };
+  },
+  created() {
+    this.fetchMovies();
+  },
+  methods: {
+    fetchMovies() {
+      const apiKey = '512f81af17888b517a1b456fbce07689';
+      const language = this.currentLanguage;
+      const page = this.currentPage;
+      let url = `https://api.themoviedb.org/3/trending/${this.currentCategory}/week?page=${page}&api_key=${apiKey}&language=${language}`;
+
+      if (this.searchQuery) {
+        url += `&query=${this.searchQuery}`;
+      }
+
+      axios
+        .get(url)
+        .then((response) => {
+          this.totalPages = response.data.total_pages;
+          this.movies = response.data.results.map((movie) => {
+            return {
+              ...movie,
+              overview: this.getTranslatedOverview(
+                movie.overview,
+                this.currentLanguage
+              ),
+            };
+          });
+        })
+        .catch((error) => {
+          console.error('Errore durante il recupero dei film/serie TV:', error);
+        });
     },
-    created() {
+    setCurrentCategory(category) {
+      this.currentCategory = category;
+      this.currentPage = 1;
       this.fetchMovies();
     },
-    methods: {
-      fetchMovies() {
-        const apiKey = '512f81af17888b517a1b456fbce07689';
-        const language = this.currentLanguage;
-        const page = this.currentPage;
-        const query = this.searchQuery;
-        const category = this.currentCategory;
-  
-        axios
-          .get(
-            `https://api.themoviedb.org/3/search/${category}?api_key=${apiKey}&language=${language}&page=${page}${query ? `&query=${query}` : ''}`
-          )
-          .then((response) => {
-            this.totalPages = response.data.total_pages;
-            this.movies = response.data.results.map((movie) => {
-              return {
-                ...movie,
-                overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
-              };
-            });
-          })
-          .catch((error) => {
-            console.error('Errore durante il recupero dei film/serie TV:', error);
-          });
-      },
-      setCurrentCategory(category) {
-        this.currentCategory = category;
+    fetchPrevMovies() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
         this.fetchMovies();
-      },
-      fetchPrevMovies() {
-        if (this.currentPage > 1) {
-          this.currentPage--;
-          this.fetchMovies();
-        }
-      },
-      fetchNextMovies() {
-        if (this.currentPage < this.totalPages) {
-          this.currentPage++;
-          this.fetchMovies();
-        }
-      },
-      toggleLanguage() {
-        this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
-        this.fetchMovies();
-      },
-      getMoviePosterUrl(posterPath) {
-        if (!posterPath) {
-          return '';
-        }
-        return `https://image.tmdb.org/t/p/w500/${posterPath}`;
-      },
-      getTranslatedOverview(overview, language) {
-        return overview;
-      },
-      handleSearchInput() {
-        this.currentPage = 1;
-        this.fetchMovies();
-      },
+      }
     },
-  };
-  </script>
-  
+    fetchNextMovies() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.fetchMovies();
+      }
+    },
+    toggleLanguage() {
+      this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
+      this.fetchMovies();
+    },
+    getMoviePosterUrl(posterPath) {
+      if (!posterPath) {
+        return '';
+      }
+      return `https://image.tmdb.org/t/p/w500/${posterPath}`;
+    },
+    getTranslatedOverview(overview, language) {
+      return overview;
+    },
+    handleSearchInput() {
+      this.currentPage = 1;
+      this.fetchMovies();
+    },
+  },
+};
+</script>
+
   <style>
   /*.catalogo {
     font-size: 24px;
@@ -203,4 +199,4 @@
     font-weight: bold;
     color: #fff;
   }
-</style>
+  </style>
