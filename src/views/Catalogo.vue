@@ -11,10 +11,8 @@
         <button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button>
         <button @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie TV</button>
       </div>
-
       <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
     </nav>
-
     <div v-for="movie in movies" :key="movie.id" class="movie-list">
       <div class="card" style="width: 15rem;">
         <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
