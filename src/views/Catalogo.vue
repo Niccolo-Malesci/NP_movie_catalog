@@ -1,5 +1,4 @@
 <template>
-  <div>
     <nav class="navbar bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand">Catalogo</a>
@@ -13,8 +12,9 @@
       </div>
       <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
     </nav>
+    <div v-if="movies.length" class = "movie-list">
     <div v-for="movie in movies" :key="movie.id" class="movie-list">
-      <div class="card" style="width: 15rem;">
+      <div class="card" style="width: 15%;">
         <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
         <div class="card-body">
           <h5 class="card-title">{{ movie.title }}</h5>
@@ -25,12 +25,11 @@
         </ul>
       </div>
     </div>
-
     <div class="pagination-buttons">
       <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
       <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
     </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -55,11 +54,14 @@ export default {
       const apiKey = '512f81af17888b517a1b456fbce07689';
       const language = this.currentLanguage;
       const page = this.currentPage;
+      const query = this.searchQuery;
+      const category = this.currentCategory;
       let url = `https://api.themoviedb.org/3/trending/${this.currentCategory}/week?page=${page}&api_key=${apiKey}&language=${language}`;
+      let url2 = `https://api.themoviedb.org/3/search/${category}?api_key=${apiKey}&language=${language}&page=${page}${query ? `&query=${query}` : ''}`;
 
       if (this.searchQuery) {
-        url += `&query=${this.searchQuery}`;
-      }
+      url = url2;
+    }
 
       axios
         .get(url)
@@ -80,9 +82,10 @@ export default {
         });
     },
     setCurrentCategory(category) {
-      this.currentCategory = category;
-      this.currentPage = 1;
-      this.fetchMovies();
+    this.currentCategory = category;
+    this.currentPage = 1;
+    this.searchQuery = ''; 
+    this.fetchMovies();
     },
     fetchPrevMovies() {
       if (this.currentPage > 1) {
@@ -109,9 +112,16 @@ export default {
     getTranslatedOverview(overview, language) {
       return overview;
     },
+
     handleSearchInput() {
+      if (this.searchQuery.length >= 3) {
       this.currentPage = 1;
       this.fetchMovies();
+      }
+      if (this.searchQuery.length === 0) {
+        this.currentPage = 1;
+        this.fetchMovies();
+      }
     },
   },
 };
