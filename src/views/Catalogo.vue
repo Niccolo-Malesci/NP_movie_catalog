@@ -14,7 +14,7 @@
     <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
     <div v-if="movies.length" class="movie-list">
       <div v-for="movie in movies" :key="movie.id">
-        <div class="card" style="width: 16rem;">
+        <div class="card" style="width: 15%;">
           <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
             <div class="card-body">
               <h5 class="card-title">{{ movie.title }}</h5>
@@ -122,6 +122,17 @@ import axios from 'axios';
 </script>
   
 <style>
+.cards {
+display: flex;
+display: -webkit-flex;
+flex-flow: row nowrap;
+-webkit-flex-flow: row nowrap;
+align-items: stretch;
+-webkit-align-items: stretch;
+justify-content: space-between;
+-webkit-justify-content: space-between;
+margin-top: 10px;
+}
   /*.catalogo {
     font-size: 24px;
     margin-bottom: 40px;
