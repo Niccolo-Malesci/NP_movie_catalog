@@ -14,11 +14,17 @@
       <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
       <div v-if="movies.length" class="movie-list">
         <ul>
-          <li v-for="movie in movies" :key="movie.id" class="movie-item">
-            <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="movie-poster" />
-            <h2 class="movie-title">{{ movie.title }}</h2>
-            <p class="movie-release-date">{{ movie.release_date }}</p>
-            <p class="movie-overview">{{ movie.overview }}</p>
+          <li v-for="movie in movies" :key="movie.id">
+            <div class="card" style="width: 15rem;">
+              <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                  <p class="card-text">{{ movie.overview }}</p>
+              </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{ movie.release_date }}</li>
+        </ul>
+            </div>
           </li>
         </ul>
         <div class="pagination-buttons">
