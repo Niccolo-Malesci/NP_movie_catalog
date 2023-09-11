@@ -15,21 +15,17 @@
       <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
     </nav>
 
-    <div class="movie-list">
-      <ul>
-        <li v-for="movie in movies" :key="movie.id">
-          <div class="card" style="width: 15rem;">
-            <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.overview }}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">{{ movie.release_date }}</li>
-            </ul>
-          </div>
-        </li>
-      </ul>
+    <div v-for="movie in movies" :key="movie.id" class="movie-list">
+      <div class="card" style="width: 15rem;">
+        <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">{{ movie.title }}</h5>
+          <p class="card-text">{{ movie.overview }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{ movie.release_date }}</li>
+        </ul>
+      </div>
     </div>
 
     <div class="pagination-buttons">
@@ -57,27 +53,34 @@ export default {
     this.fetchMovies();
   },
   methods: {
-  fetchMovies() {
-    const apiKey = '512f81af17888b517a1b456fbce07689';
-    const language = this.currentLanguage;
-    const page = this.currentPage;
-    const url = `https://api.themoviedb.org/3/trending/${this.currentCategory}/week?page=${page}&api_key=${apiKey}&language=${language}`;
+    fetchMovies() {
+      const apiKey = '512f81af17888b517a1b456fbce07689';
+      const language = this.currentLanguage;
+      const page = this.currentPage;
+      let url = `https://api.themoviedb.org/3/trending/${this.currentCategory}/week?page=${page}&api_key=${apiKey}&language=${language}`;
 
-    axios
-      .get(url)
-      .then((response) => {
-        this.totalPages = response.data.total_pages;
-        this.movies = response.data.results.map((movie) => {
-          return {
-            ...movie,
-            overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
-          };
+      if (this.searchQuery) {
+        url += `&query=${this.searchQuery}`;
+      }
+
+      axios
+        .get(url)
+        .then((response) => {
+          this.totalPages = response.data.total_pages;
+          this.movies = response.data.results.map((movie) => {
+            return {
+              ...movie,
+              overview: this.getTranslatedOverview(
+                movie.overview,
+                this.currentLanguage
+              ),
+            };
+          });
+        })
+        .catch((error) => {
+          console.error('Errore durante il recupero dei film/serie TV:', error);
         });
-      })
-      .catch((error) => {
-        console.error('Errore durante il recupero dei film/serie TV:', error);
-      });
-  },
+    },
     setCurrentCategory(category) {
       this.currentCategory = category;
       this.currentPage = 1;
@@ -115,7 +118,7 @@ export default {
   },
 };
 </script>
-  
+
   <style>
   /*.catalogo {
     font-size: 24px;
