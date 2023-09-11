@@ -126,7 +126,6 @@ export default {
   },
 };
 </script>
-
   <style>
   /*.catalogo {
     font-size: 24px;
