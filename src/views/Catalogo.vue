@@ -122,17 +122,6 @@ import axios from 'axios';
 </script>
   
 <style>
-.cards {
-display: flex;
-display: -webkit-flex;
-flex-flow: row nowrap;
--webkit-flex-flow: row nowrap;
-align-items: stretch;
--webkit-align-items: stretch;
-justify-content: space-between;
--webkit-justify-content: space-between;
-margin-top: 10px;
-}
   /*.catalogo {
     font-size: 24px;
     margin-bottom: 40px;
