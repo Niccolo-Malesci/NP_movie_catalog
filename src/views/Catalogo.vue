@@ -130,12 +130,6 @@ export default {
   object-fit: cover;
 }
 
-.container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
-}
-
 .movie-item {
   width: 100%;
 }
