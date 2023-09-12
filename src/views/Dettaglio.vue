@@ -143,6 +143,10 @@
   </script>
   
   <style scoped>
+  .card {
+    background-color: darkslateblue;
+    color: white;
+  }
   .movie-poster {
     object-fit: cover;
     width: 100%;
