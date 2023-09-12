@@ -173,6 +173,10 @@ export default {
   text-align: center;
 }
 
+.list-group-item {
+  background-color: grey;
+}
+
 .pagination-button {
   background-color: #e50914;
   color: #fff;

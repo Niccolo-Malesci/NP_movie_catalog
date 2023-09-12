@@ -152,4 +152,10 @@
     width: 100%;
     height: 100%;
   }
+  .card-text {
+    color: aquamarine;
+  }
+  .text-body-secondary {
+    background-color: aliceblue;
+  }
   </style>  
