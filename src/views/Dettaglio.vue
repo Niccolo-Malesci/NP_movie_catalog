@@ -49,7 +49,7 @@
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
             </p>
-            <p v-else-if="movie.vote_average>2.25 && movie.vote_average<=2.75">
+            <p v-else-if="(movie.vote_average/2)>2.25 && (movie.vote_average/2)<=2.75">
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-fill"></i>
                 <i class="bi bi-star-half"></i>
