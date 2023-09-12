@@ -10,7 +10,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ movie.title }}</h5>
             <p class="card-text">{{ movie.tagline }}</p>
-            <img src="src\components\icons\stella.jpg">
+            <i class="bi bi-star-fill"></i>
             <p>{{ movie.overview }}</p>
             <p style="font-style: italic;">Paesi di produzione: {{ getCountries(movie.production_countries) }}</p>
             <p style="font-style: italic;">Case di produzione: {{ getCompanies(movie.production_companies) }}</p>
