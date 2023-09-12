@@ -1,18 +1,38 @@
 <template>
-  <nav class="navbar bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand">Catalogo</a>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid" style="width: max-content;">
+    <a class="navbar-brand" href="#">NP Catalogo film</a>
+  </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><button style="width: max-content;" @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie-TV </button></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Lingua
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Italiano <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button></a></li>
+            <li><a class="dropdown-item" href="#">Inglese <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button></a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
-    <div class="position-absolute top-0 end-0">
-      <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button>
-    </div>
-    <div class="position-absolute top-1 end-0">
-      <button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button>
-      <button @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie TV</button>
-    </div>
-    <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
-  </nav>
-  <div v-if="movies.length" class="movie-list">
+    <form class="d-flex" role="search" >
+        <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
+      </form>
+      </nav> 
+        <div v-if="movies.length" class="movie-list">
     <div v-for="movie in movies" :key="movie.id" class="movie-item">
       <div class="card">
         <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
@@ -26,10 +46,11 @@
       </div>
     </div>
   </div>
-  <div class="pagination-buttons">
+<div class="pagination-buttons">
     <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
     <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
   </div>
+  
 </template>
 
 <script>
