@@ -10,11 +10,87 @@
           <div class="card-body">
             <h5 class="card-title">{{ movie.title }}</h5>
             <p class="card-text">{{ movie.tagline }}</p>
-            <i class="bi bi-star-fill"></i>
             <p>{{ movie.overview }}</p>
             <p style="font-style: italic;">Paesi di produzione: {{ getCountries(movie.production_countries) }}</p>
             <p style="font-style: italic;">Case di produzione: {{ getCompanies(movie.production_companies) }}</p>
-            <p>Valutazione: {{ movie.vote_average }}/10</p>
+            Valutazione: {{ movie.vote_average }}/10
+            <p v-if="movie.vote_average<=0.25">
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+            </p>
+            <p v-else-if="(movie.vote_average/2)>0.25 && (movie.vote_average/2)<=0.75">
+                <i class="bi bi-star-half"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+            </p>
+            <p v-else-if="(movie.vote_average/2)>0.75 && (movie.vote_average/2)<=1.25">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+            </p>
+            <p v-else-if="(movie.vote_average/2)>1.25 && (movie.vote_average/2)<=1.75">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-half"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+            </p>
+            <p v-else-if="(movie.vote_average/2)>1.75 && (movie.vote_average/2)<=2.25">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+            </p>
+            <p v-else-if="movie.vote_average>2.25 && movie.vote_average<=2.75">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-half"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+            </p>
+            <p v-else-if="(movie.vote_average/2)>2.75 && (movie.vote_average/2)<=3.25">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star"></i>
+                <i class="bi bi-star"></i>
+            </p>
+            <p v-else-if="(movie.vote_average/2)>3.25 && (movie.vote_average/2)<=3.75">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-half"></i>
+                <i class="bi bi-star"></i>
+            </p>
+            <p v-else-if="(movie.vote_average/2)>3.75 && (movie.vote_average/2)<=4.25">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star"></i>
+            </p>
+            <p v-else-if="(movie.vote_average/2)>4.25 && (movie.vote_average/2)<=4.75">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-half"></i>
+            </p>
+            <p v-else>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+            </p>
             <p>Popolarità: {{ movie.popularity }}</p>
             <p style="font-weight: bold;">{{ getGenres(movie.genres) }}</p>
             <p class="card-text"><small class="text-body-secondary">Durata: {{ movie.runtime }} minuti <br> {{ movie.release_date }}</small></p>
