@@ -141,7 +141,7 @@ export default {
 .movie-list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
+  grid-gap: 5px;
 }
 
 .pagination-buttons {
