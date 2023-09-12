@@ -17,16 +17,16 @@
             <p v-if="(movie.vote_average/2)<=0.25">
                 <i class="bi bi-star" style="color: yellow;"></i>
                 <i class="bi bi-star" style="color: yellow;"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
+                <i class="bi bi-star" style="color: yellow;"></i>
+                <i class="bi bi-star" style="color: yellow;"></i>
+                <i class="bi bi-star" style="color: yellow;"></i>
             </p>
             <p v-else-if="(movie.vote_average/2)>0.25 && (movie.vote_average/2)<=0.75">
-                <i class="bi bi-star-half"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
-                <i class="bi bi-star"></i>
+                <i class="bi bi-star-half" style="color: yellow;"></i>
+                <i class="bi bi-star" style="color: yellow;"></i>
+                <i class="bi bi-star" style="color: yellow;"></i>
+                <i class="bi bi-star" style="color: yellow;"></i>
+                <i class="bi bi-star" style="color: yellow;"></i>
             </p>
             <p v-else-if="(movie.vote_average/2)>0.75 && (movie.vote_average/2)<=1.25">
                 <i class="bi bi-star-fill" style="color: yellow;"></i>
