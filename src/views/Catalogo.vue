@@ -1,7 +1,7 @@
 <template>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid" style="width: max-content;">
-    <a class="navbar-brand" href="#">NP Catalogo Film</a>
+    <a class="navbar-brand" href="#">{{ $t('appTitle') }}</a>
   </div>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -26,7 +26,7 @@
       </ul>
     </div>
   <form class="d-flex" role="search" >
-    <input v-model="searchQuery" @input="handleSearchInput" placeholder="Cerca..." class="search-input" />
+    <input v-model="searchQuery" @input="handleSearchInput" :placeholder="$t('searchPlaceholder')" class="search-input" />
   </form>
 </nav> 
   <div v-if="movies.length" class="movie-list">
@@ -36,11 +36,13 @@
           <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
         </router-link>
         <div class="card-body">
-          <h5 class="card-title">{{ movie.title }}</h5>
-          <p class="card-text">{{ movie.overview }}</p>
+          <h5 v-if="movie.name" class="card-title">{{ movie.title }}</h5>
+          <h5 v-else class="card-title">{{ movie.name }}</h5>
+          <p  class="card-text">{{ movie.overview }}</p>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">{{ movie.release_date }}</li>
+          <li v-if="movie.release_date" class="list-group-item">{{ movie.release_date }}</li>
+          <li v-else class="list-group-item">{{ movie.first_air_date }}</li>
         </ul>
       </div>
     </div>
@@ -118,6 +120,7 @@ export default {
     toggleLanguage() {
       this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
       this.fetchMovies();
+      this.$i18n.locale = this.currentLanguage;
     },
     getMoviePosterUrl(posterPath) {
       if (!posterPath) {
