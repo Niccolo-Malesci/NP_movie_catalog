@@ -14,7 +14,7 @@
             <p style="font-style: italic;">Paesi di produzione: {{ getCountries(movie.production_countries) }}</p>
             <p style="font-style: italic;">Case di produzione: {{ getCompanies(movie.production_companies) }}</p>
             Valutazione: {{ movie.vote_average }}/10
-            <p v-if="movie.vote_average<=0.25">
+            <p v-if="(movie.vote_average/2)<=0.25">
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
                 <i class="bi bi-star"></i>
