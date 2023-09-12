@@ -36,7 +36,7 @@
           <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
         </router-link>
         <div class="card-body">
-          <h5 v-if="movie.name" class="card-title">{{ movie.title }}</h5>
+          <h5 v-if="movie.title" class="card-title">{{ movie.title }}</h5>
           <h5 v-else class="card-title">{{ movie.name }}</h5>
           <p  class="card-text">{{ movie.overview }}</p>
         </div>
