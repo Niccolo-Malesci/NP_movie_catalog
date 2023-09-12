@@ -22,8 +22,7 @@
             Lingua
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Italiano <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button></a></li>
-            <li><a class="dropdown-item" href="#">Inglese <button @click="toggleLanguage">{{ currentLanguage === 'en' ? 'Passa a Italiano' : 'Switch to English' }}</button></a></li>
+            <li><a class="dropdown-item" href="#"><button @click="toggleLanguage">{{ currentLanguage === 'it' ? 'English' : 'Italian' }}</button></a></li>
           </ul>
         </li>
       </ul>
