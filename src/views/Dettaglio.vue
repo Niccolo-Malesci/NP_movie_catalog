@@ -1,20 +1,25 @@
 <template>
     <div>
-      <h1>{{ movie.title }}</h1>
       <div>
-        <div>
-          <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film">
-        </div>
-        <div>
-          <p><strong>Data di uscita:</strong> {{ formatReleaseDate(movie.release_date) }}</p>
-          <p><strong>Valutazione:</strong> {{ movie.vote_average }}/10</p>
-          <p v-if="movie.tagline"><strong>Tagline:</strong> {{ movie.tagline }}</p>
-          <p v-if="movie.homepage"><strong>Sito Web:</strong> <a :href="movie.homepage" target="_blank">{{ movie.homepage }}</a></p>
-          <p v-if="movie.runtime"><strong>Durata:</strong> {{ formatRuntime(movie.runtime) }} minuti</p>
-          <p v-if="movie.genres.length"><strong>Generi:</strong> {{ getGenres(movie.genres) }}</p>
-          <p v-if="movie.production_countries.length"><strong>Paese di produzione:</strong> {{ getProductionCountries(movie.production_countries) }}</p>
-          <p v-if="movie.production_companies.length"><strong>Case di produzione:</strong> {{ getProductionCompanies(movie.production_companies) }}</p>
-          <p v-if="movie.overview"><strong>Trama:</strong> {{ movie.overview }}</p>
+        <div class="card mb-3" style="max-width: 70%;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <a :href="movie.homepage" target="_blank"><img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="img-fluid rounded-start"></a>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.title }}</h5>
+                        <p class="card-text"> {{ movie.tagline }} </p>
+                        <p> {{ movie.overview }}</p>
+                        <p> Paesi di produzione: {{ getCountries(movie.production_countries) }} </p>
+                        <p> Case di produzione: {{ getCompanies(movie.production_companies) }}</p>
+                        <p> Valutazione: {{ movie.vote_average }}/10 </p>
+                        <p> Popolarità: {{ movie.popularity }}</p>
+                        <p> {{ getGenres(movie.genres) }} </p>
+                        <p class="card-text"><small class="text-body-secondary">Durata: {{ movie.runtime }} minuti <br> {{ movie.release_date }}</small></p>
+                    </div>
+                </div>
+            </div>
         </div>
       </div>
     </div>
@@ -27,6 +32,7 @@
         apiKey: '6f9286d54de4891ea7a5c91779e09786',
         language: 'it',
         movie: {},
+        homepage: '',
       };
     },
     created() {
@@ -49,26 +55,15 @@
         }
         return `https://image.tmdb.org/t/p/w500/${posterPath}`;
       },
-      formatReleaseDate(date) {
-        return new Date(date).toLocaleDateString(this.language);
-      },
-      formatRuntime(minutes) {
-        const hours = Math.floor(minutes / 60);
-        const remainingMinutes = minutes % 60;
-        return `${hours}h ${remainingMinutes}m`;
-      },
       getGenres(genres) {
         return genres.map(genre => genre.name).join(', ');
       },
-      getProductionCountries(countries) {
+      getCountries(countries) {
         return countries.map(country => country.name).join(', ');
       },
-      getProductionCompanies(companies) {
+      getCompanies(companies) {
         return companies.map(company => company.name).join(', ');
       },
     },
   };
-  </script>
-  
-  <style scoped>
-  </style>
+  </script>  
