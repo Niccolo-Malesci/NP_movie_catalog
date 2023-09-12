@@ -157,7 +157,9 @@ export default {
 }
 
 .card {
+  background-color: darkslateblue;
   width: 100%;
+  color: white;
 }
 
 .movie-list {
