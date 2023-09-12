@@ -15,7 +15,9 @@
   <div v-if="movies.length" class="movie-list">
     <div v-for="movie in movies" :key="movie.id" class="movie-item">
       <div class="card">
-        <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+        <router-link to="/catalogo/dettaglio">
+          <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+        </router-link>
         <div class="card-body">
           <h5 class="card-title">{{ movie.title }}</h5>
           <p class="card-text">{{ movie.overview }}</p>
