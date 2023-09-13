@@ -13,7 +13,7 @@
             <p>{{ movie.overview }}</p>
             <p style="font-style: italic;">Paesi di produzione: {{ getCountries(movie.production_countries) }}</p>
             <p style="font-style: italic;">Case di produzione: {{ getCompanies(movie.production_companies) }}</p>
-            Valutazione: {{ movie.vote_average }}/10
+            Valutazione:
             <p v-if="(movie.vote_average/2)<=0.25">
                 <i class="bi bi-star" style="color: yellow;"></i>
                 <i class="bi bi-star" style="color: yellow;"></i>
@@ -144,7 +144,7 @@
   
   <style scoped>
   .card {
-    background-color: darkslateblue;
+    background-color: crimson;
     color: white;
   }
   .movie-poster {
@@ -153,7 +153,6 @@
     height: 100%;
   }
   .card-text {
-    color: aquamarine;
   }
   .text-body-secondary {
     background-color: aliceblue;

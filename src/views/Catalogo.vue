@@ -40,10 +40,6 @@
           <h5 v-else class="card-title">{{ movie.name }}</h5>
           <p  class="card-text">{{ movie.overview }}</p>
         </div>
-        <ul class="list-group list-group-flush">
-          <li v-if="movie.release_date" class="list-group-item">{{ movie.release_date }}</li>
-          <li v-else class="list-group-item">{{ movie.first_air_date }}</li>
-        </ul>
       </div>
     </div>
   </div>
@@ -146,7 +142,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card-img-top {
   height: 450px;
   object-fit: cover;
@@ -157,7 +153,7 @@ export default {
 }
 
 .card {
-  background-color: darkslateblue;
+  background-color: crimson;
   width: 100%;
   color: white;
 }
@@ -174,7 +170,7 @@ export default {
 }
 
 .list-group-item {
-  background-color: grey;
+  background-color: lightpink;
 }
 
 .pagination-button {
