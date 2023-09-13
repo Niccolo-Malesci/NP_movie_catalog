@@ -13,10 +13,14 @@ const i18n = createI18n({
     it: {
       searchPlaceholder: 'Cerca...',
       appTitle: 'NP Catalogo Film',
+      showMore: 'Mostra altro',
+      showLess: 'Mostra meno',
     },
     en: {
       searchPlaceholder: 'Search...',
       appTitle: "NP's Movie Catalog",
+      showMore: 'Show more',
+      showLess: 'Show less',
     },
   },
 });
