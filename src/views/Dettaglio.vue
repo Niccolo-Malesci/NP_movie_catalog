@@ -93,7 +93,9 @@
             </p>
             <p>Popolarità: {{ movie.popularity }}</p>
             <p style="font-weight: bold;">{{ getGenres(movie.genres) }}</p>
-            <p class="card-text"><small class="text-body-secondary">Durata: {{ movie.runtime }} minuti <br> {{ movie.release_date }}</small></p>
+            <p class="card-text" style="color: white; position: absolute; bottom: 0;">
+              Durata: {{ movie.runtime }} minuti <br> Data di pubblicazione: {{ movie.release_date }}
+            </p>
           </div>
         </div>
       </div>
@@ -153,8 +155,5 @@
     height: 100%;
   }
   .card-text {
-  }
-  .text-body-secondary {
-    background-color: aliceblue;
   }
   </style>  
