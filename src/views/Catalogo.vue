@@ -89,17 +89,17 @@ Copy code
             <p class="card-text" v-if="!movie.expandedDescription">
               {{ truncateDescription(movie.overview) }}
               <a v-if="shouldShowExpandButton(movie)" @click="toggleDescription(movie)" class="expand-button">
-                Mostra altro
+                {{ $t('showMore') }}
               </a>
             </p>
             <p class="card-text" v-else>
               {{ movie.overview }}
-              <a @click="toggleDescription(movie)" class="expand-button"> Mostra meno</a>
+              <a @click="toggleDescription(movie)" class="expand-button"> {{ $t('showLess') }} </a>
             </p>
           </div>
 >>>>>>> 761e6f84ff5c1c3fd5f789a9ec283b502cc01e8e
         </div>
-      </div>
+      </div> 
     </div>
     <div class="pagination-buttons">
       <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
