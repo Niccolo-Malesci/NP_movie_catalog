@@ -23,7 +23,7 @@ export const router = createRouter({
       component: Registrazione
     },
     {
-      path: '/catalogo/dettaglio/:id',
+      path: '/catalogo/dettaglio/:id/:media_type',
       name: 'dettaglio',
       component: Dettaglio
     }
