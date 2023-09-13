@@ -93,7 +93,7 @@
             </p>
             <p>Popolarità: {{ movie.popularity }}</p>
             <p style="font-weight: bold;">{{ getGenres(movie.genres) }}</p>
-            <p class="card-text" style="color: white; bottom: 0; text-align: right;">
+            <p class="card-text" style="color: white; position: absolute; bottom: 0; right: 0; margin: 10px;">
               Durata: {{ movie.runtime }} minuti <br> Data di pubblicazione: {{ movie.release_date }}
             </p>
           </div>
