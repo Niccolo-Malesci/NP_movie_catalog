@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h5 class="card-title" style="font-size: xx-large;">{{ movie.title }}</h5>
+            <h5 class="card-title" style="font-size: xx-large; text-align: center;">{{ movie.title }}</h5>
             <p class="card-text" style="font-weight: bold;">{{ movie.tagline }}</p>
             <p>{{ movie.overview }}</p>
             <p style="font-style: italic;">Paesi di produzione: {{ getCountries(movie.production_countries) }}</p>
@@ -93,7 +93,7 @@
             </p>
             <p>Popolarità: {{ movie.popularity }}</p>
             <p style="font-weight: bold;">{{ getGenres(movie.genres) }}</p>
-            <p class="card-text" style="color: white; position: absolute; bottom: 0;">
+            <p class="card-text" style="color: white; bottom: 0; text-align: right;">
               Durata: {{ movie.runtime }} minuti <br> Data di pubblicazione: {{ movie.release_date }}
             </p>
           </div>
@@ -154,15 +154,4 @@
     width: 100%;
     height: 100%;
   }
-
-@media (min-width: 1700px) {
-  .card {
-    font-size: medium;
-  };
-}
-@media (min-width: 1700px) {
-  .card {
-    font-size: medium;
-  };
-}
   </style>  
