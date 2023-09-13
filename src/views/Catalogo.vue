@@ -1,4 +1,46 @@
 <template>
+<<<<<<< HEAD
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid" style="width: max-content;">
+    <a class="navbar-brand" href="#">{{ $t('appTitle') }}</a>
+  </div>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><button style="width: max-content;" @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie-TV </button></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Lingua</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#"><button @click="toggleLanguage">{{ currentLanguage === 'it' ? 'English' : 'Italian' }}</button></a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  <form class="d-flex" role="search" >
+    <input v-model="searchQuery" @input="handleSearchInput" :placeholder="$t('searchPlaceholder')" class="search-input" />
+  </form>
+</nav> 
+  <div v-if="movies.length" class="movie-list">
+    <div v-for="movie in movies" :key="movie.id" class="movie-item">
+      <div class="card">
+        <router-link :to="{ name: 'dettaglio', params: { id: movie.id, media_type: movie.media_type }}">
+          <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+        </router-link>
+        <div class="card-body">
+          <h5 v-if="movie.title" class="card-title">{{ movie.title }}</h5>
+          <h5 v-else class="card-title">{{ movie.name }}</h5>
+          <p  class="card-text">{{ movie.overview }}</p>
+=======
   <div>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid" style="width: max-content;">
@@ -50,8 +92,9 @@
               <a @click="toggleDescription(movie)" class="expand-button"> {{ $t('showLess') }} </a>
             </p>
           </div>
+>>>>>>> 761e6f84ff5c1c3fd5f789a9ec283b502cc01e8e
         </div>
-      </div>
+      </div> 
     </div>
     <div class="pagination-buttons">
       <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
@@ -99,7 +142,6 @@ export default {
             return {
               ...movie,
               overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
-              expandedDescription: false,
             };
           });
         })
@@ -139,18 +181,7 @@ export default {
     getTranslatedOverview(overview, language) {
       return overview;
     },
-    shouldShowExpandButton(movie) {
-      return movie.overview.length > 100;
-    },
-    truncateDescription(description) {
-      if (description.length <= 100) {
-        return description;
-      }
-      return description.substring(0, 100) + '...';
-    },
-    toggleDescription(movie) {
-      movie.expandedDescription = !movie.expandedDescription;
-    },
+
     handleSearchInput() {
       if (this.searchQuery.length >= 2) {
         this.currentPage = 1;
@@ -166,15 +197,6 @@ export default {
 </script>
 
 <style scoped>
-.expand-button {
-  color: white;
-}
-.expand-button:hover {
-  text-decoration: underline;
-  cursor: pointer;
-  color: blueviolet;
-}
-
 .card-img-top {
   height: 450px;
   object-fit: cover;
