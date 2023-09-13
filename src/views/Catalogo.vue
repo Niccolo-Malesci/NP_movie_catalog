@@ -35,7 +35,7 @@
         <router-link :to="{ name: 'dettaglio', params: { id: movie.id, media_type: movie.media_type }}">
           <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
         </router-link>
-        <div class="card-body" style="min-height: 180px;">
+        <div class="card-body" style="min-height: 185px;">
           <h5 v-if="movie.title" class="card-title">{{ movie.title }}</h5>
           <h5 v-else class="card-title">{{ movie.name }}</h5>
           <p class="card-text" v-if="!movie.expandedDescription">
@@ -149,6 +149,7 @@ export default {
       movie.expandedDescription = !movie.expandedDescription;
     },
     handleSearchInput() {
+    console.log("Ricerca in corso con query:", this.searchQuery);
       if (this.searchQuery.length >= 2) {
         this.currentPage = 1;
         this.fetchMovies();
