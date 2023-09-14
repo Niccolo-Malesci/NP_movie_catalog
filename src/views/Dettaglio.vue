@@ -96,7 +96,25 @@
       </div>
     </div>
   </div>
+  <div class="carousel-container">
+    <div class="carousel">
+      <div class="carousel-inner">
+        <div v-for="(recommended, index) in recommendedMedia" :key="index" :class="['carousel-item', index < 4 ? 'active' : '']">
+          <img :src="getMediaPosterUrl(recommended.poster_path)" class="d-block w-100" alt="Media Consigliato">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
 </template>
+
 
 <script>
 export default {
@@ -105,11 +123,21 @@ export default {
       apiKey: '512f81af17888b517a1b456fbce07689',
       language: 'it',
       media: {},
-    };
+      recommendedMedia: [], 
+      };
   },
   created() {
     const mediaId = this.$route.params.id;
     const mediaType = this.$route.params.media_type;
+    const recommendedMediaUrl = `https://api.themoviedb.org/3/${mediaType}/${mediaId}/recommendations?api_key=${this.apiKey}&language=${this.language}`;
+
+    fetch(recommendedMediaUrl)
+      .then(response => response.json())
+      .then(data => {
+        this.recommendedMedia = data.results;
+      })
+      .catch(error => console.error('Errore durante il recupero dei media consigliati:', error));
+
     this.fetchMediaDetails(mediaId, mediaType);
   },
   methods: {
@@ -146,9 +174,29 @@ export default {
   background-color: crimson;
   color: white;
 }
+
 .media-poster {
   object-fit: cover;
   width: 100%;
   height: 100%;
+}
+
+.carousel-container {
+  overflow: hidden;
+  white-space: nowrap; 
+}
+
+.carousel {
+  display: inline-block; 
+}
+
+.carousel-inner {
+  display: flex; 
+  transition: transform 0.5s ease; 
+}
+
+.carousel-item {
+  flex: 0 0 25%; 
+  margin-right: 10px; 
 }
 </style>
