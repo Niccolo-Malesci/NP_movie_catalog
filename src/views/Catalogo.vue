@@ -32,7 +32,7 @@
   <div v-if="movies.length" class="movie-list">
     <div v-for="movie in movies" :key="movie.id" class="movie-item">
       <div class="card">
-        <router-link v-if="currentCategory ==='movie'" :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'movie' }}">
+        <router-link v-if="movie.media_type=='movie'" :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'movie' }}">
           <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
         </router-link>
         <router-link v-else :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'tv' }}">
