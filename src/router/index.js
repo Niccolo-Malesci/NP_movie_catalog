@@ -4,6 +4,7 @@ import Catalogo from '/src/views/Catalogo.vue'
 import Registrazione from '/src/views/Registrazione.vue'
 import Dettaglio from '/src/views/Dettaglio.vue'
 
+
 export const router = createRouter({
   history: createWebHistory(),
   routes: [
