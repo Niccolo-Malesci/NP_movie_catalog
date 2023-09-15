@@ -27,7 +27,7 @@ const i18n = createI18n({
   },
 });
 
-let store = createStore ({
+let store = createStore({
   state: {
     email_registrazione: '',
     password_registrazione: '',
