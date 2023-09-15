@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     fetchMovies() {
-      const apiKey = '512f81af17888b517a1b456fbce07689';
+      const apiKey = import.meta.env.VITE_API_KEY;
       const language = this.currentLanguage;
       const page = this.currentPage;
       const query = this.searchQuery;

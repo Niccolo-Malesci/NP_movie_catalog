@@ -36,15 +36,6 @@
 
 <script>
 export default {
-  /*beforeRouteEnter(to, from, next) {
-    if (to.name === 'registrazione') {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'src\assets\registrazione.css';
-      document.head.appendChild(link);
-    }
-    next();
-    },*/
   data () {
     return {
       nome_registrazione: '',
@@ -101,84 +92,4 @@ export default {
 
 
 <style>
-/*.input-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40%;
-    margin-top: 5%;
-  }
-  
-  h1, h2 {
-    color: white;
-    text-align: center;
-  }
-  
-  h1 {
-    margin-top: 13%;
-    margin-bottom: -0.10%;
-  }
-  
-  body {
-    background-image: url('https://e1.pxfuel.com/desktop-wallpaper/646/773/desktop-wallpaper-login-page-login.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  
-  .nome-g {
-    display: inline-block;
-    margin-right: 2.5%;
-    margin-left: 5%;
-  }
-  
-  .cognome-g {
-    display: inline-block;
-    margin-left: 2.5%;
-  }
-  
-  .email-g {
-    margin-top: 5%;
-    margin-left: 5%;
-  }
-  
-  .password-g {
-    display: inline-block;
-    margin-top: 5%;
-    margin-right: 2.5%;
-    margin-left: 5%;
-  }
-  
-  .password-gc {
-    display: inline-block;
-    margin-left: 2.5%;
-  }
-  
-  .nascita {
-    font-size: 110%;
-  }
-  
-  .nascita-g {
-    font-size: 125%;
-    color: white;
-    margin-left: 5%;
-  }
-  
-  .nome, .cognome, .password, .password-c {
-    font-size: 125%;
-  }
-  
-  .email {
-    font-size: 125%;
-  }
-  
-  .button {
-    font-size: 125%;
-    margin-top: 3%;
-    margin-left: 42%;
-  }
-  
-  ::-webkit-input-placeholder { color: gray; font-style:italic; font-size: 110%;}
-  ::-moz-input-placeholder { color: gray; font-style:italic; font-size: 110%;}
-  ::-ms-input-placeholder { color: gray; font-style:italic; font-size: 110%;}*/
 </style>
