@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import { createI18n } from 'vue-i18n';
 import Carousel from 'vue-carousel';
+import { createStore } from 'vuex';
 
 const app = createApp(App);
 
@@ -26,8 +27,25 @@ const i18n = createI18n({
   },
 });
 
+let store = createStore ({
+  state: {
+    email_registrazione: '',
+    password_registrazione: '',
+  },
+  mutations: {
+    setEmail(state, email) {
+      state.email_registrazione = email;
+    },
+    setPassword(state, password) {
+      state.password_registrazione = password;
+    },
+  },
+})
+
 app.use(i18n);
 
 app.use(Carousel);
 
 app.mount('#app');
+
+app.use(store);

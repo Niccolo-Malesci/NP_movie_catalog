@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import Registrazione from './Registrazione.vue';
-
 export default {
   data() {
     return {
@@ -47,7 +45,7 @@ export default {
         alert('Password mancante')
         return false
       }
-      if (this.email_accesso != Registrazione.email_registrazione || this.password_accesso != Registrazione.password_registrazione) {
+      if (this.email_accesso != this.$store.state.email_registrazione || this.password_accesso != this.$store.state.password_registrazione) {
         alert('Account non esistente')
         return false
       }
