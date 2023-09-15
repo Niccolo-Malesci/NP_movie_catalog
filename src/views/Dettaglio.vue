@@ -130,7 +130,7 @@
 export default {
   data() {
     return {
-      apiKey: import.meta.env.VITE_API_KEY,
+      apiKey: '512f81af17888b517a1b456fbce07689',
       language: 'it',
       media: {},
       recommendedMedia: [],
