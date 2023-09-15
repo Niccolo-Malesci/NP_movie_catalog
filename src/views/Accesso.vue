@@ -2,7 +2,8 @@
   <div class="card position-absolute top-50 start-50 translate-middle" style="width: 18rem;">
     <form>
       <div class="mb-3">
-        <h1>Accedi</h1>
+        <h1 style="text-align: center; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Accedi
+        </h1>
         <div class="input-container">
           <div class="email-g">
             <input type="email" id="myEmail" placeholder="e-mail" class="email" v-model="email_accesso">
@@ -10,14 +11,14 @@
           <div class="password-g">
             <input type="password" id="myPassword" placeHolder="Password" class="password" v-model="password_accesso">
           </div>
-          <div>
+          <div style="justify-content: center; align-items: center; display: flex; margin: 5%;">
             <input type="submit" id="theButton" value="Accedi" class="pulsante" @click="access">
           </div>
         </div>
       </div>
-      <div class="iscrizione">
-        <p>Non sei ancora membro NP? <br>
-          <router-link to="/registrazione">
+      <div style="margin: 4%;">
+        <p> Non sei ancora membro NP? <br>
+          <router-link style="display: flex; text-decoration: none; justify-content: right;" to="/registrazione">
             <button @click=" ">Clicca qui e registrati!</button>
           </router-link>
         </p>
@@ -57,4 +58,18 @@ export default {
 </script>
 
 
-<style></style>
+<style scoped>
+.email-g {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin: 5%;
+}
+
+.password-g {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin: 5%;
+}
+</style>
