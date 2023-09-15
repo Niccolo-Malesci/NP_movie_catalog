@@ -1,42 +1,55 @@
 <template>
-  <div class="card card position-absolute top-50 start-50 translate-middle" style="width: 18rem;">
-  <form>
-  <div class="mb-3">
-    <h1>Registrati!</h1>
-    <h2>Non è mai stato così semplice:</h2>
-    <div v-if="controllo" class="input-container">
-      <div class="nome-g">
-        <input type="text" id="myName" placeholder="Nome" class="nome" v-model="nome_registrazione" maxlength="50">
+  <div class="card card position-absolute top-50 start-50 translate-middle" style="width: 30rem;">
+    <form>
+      <div class="mb-3">
+        <h1
+          style="text-align: center; margin-top: 2%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+          Registrati!</h1>
+        <h2 style="text-align: center; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Non
+          è mai stato così semplice:</h2>
+        <div class="input-container">
+          <div style="justify-content: center; align-items: center; display: flex;">
+            <div class="nome-g">
+              <input type="text" id="myName" placeholder="Nome" class="nome" v-model="nome_registrazione" maxlength="50">
+            </div>
+            <div class="cognome-g">
+              <input type="text" id="mySurname" placeholder="Cognome" class="cognome" v-model="cognome_registrazione"
+                maxlength="50">
+            </div>
+          </div>
+          <div style="justify-content: center; align-items: center; display: flex;">
+            <div class="password-g">
+              <input type="password" id="myPassword" placeholder="Password" class="password"
+                v-model="password_registrazione">
+            </div>
+            <div class="password-gc">
+              <input type="password" id="myPassword" placeholder="Conferma Password" class="password-c"
+                v-model="passwordC_registrazione">
+            </div>
+          </div>
+          <div class="email-g">
+            <input type="email" id="myEmail" placeholder="e-mail" class="email" v-model="email_registrazione"
+              maxlength="320">
+          </div>
+          <div class="nascita-g">
+            <p>Inserisci qui la tua data di nascita:</p>
+            <input type="date" id="birthday" class="nascita">
+          </div>
+          <div style="justify-content: center; align-items: center; display: flex; margin-top: 4%;">
+            <input type="submit" id="theButton" value="Registrati" class="button" @click="controllo">
+          </div>
+        </div>
       </div>
-      <div class="cognome-g">
-        <input type="text" id="mySurname" placeholder="Cognome" class="cognome" v-model="cognome_registrazione" maxlength="50">
-      </div>
-      <div class="email-g">
-        <input type="email" id="myEmail" placeholder="e-mail" class="email" v-model="email_registrazione" maxlength="320">
-      </div>
-      <div class="password-g">
-        <input type="password" id="myPassword" placeholder="Password" class="password" v-model="password_registrazione">
-      </div>
-      <div class="password-gc">
-        <input type="password" id="myPassword" placeholder="Conferma Password" class="password-c" v-model="passwordC_registrazione">
-      </div>
-      <div class="nascita-g">
-        <p>Inserisci qui la tua data di nascita:</p>
-        <input type="date" id="birthday" class="nascita">
-      </div>
-      <RouterLink to="/">
-          <input type="submit" id="theButton" value="Registrati" class="button" v-on:click="controllo">
-        </RouterLink>
-    </div>
+    </form>
   </div>
-</form>
-</div>
 </template>
 
 
 <script>
+
+import { bus } from './variabili.js';
 export default {
-  data () {
+  data() {
     return {
       nome_registrazione: '',
       cognome_registrazione: '',
@@ -77,14 +90,15 @@ export default {
         return false
       };
       if (this.password_registrazione.length !== 8) {
-        alert ('La Password deve essere 8 caratteri')
+        alert('La Password deve essere 8 caratteri')
         return false
       };
       if (this.email_registrazione.includes("@") == false) {
-        alert ('e-mail non valida')
+        alert('e-mail non valida')
         return false
       }
-      return true
+      alert('Registrazione avvenuta con successo!')
+      this.$router.push('/')
     },
   }
 }
@@ -92,4 +106,23 @@ export default {
 
 
 <style>
+.nome-g,
+.cognome-g,
+.password-g,
+.password-gc {
+  display: inline-block;
+  margin: 2%;
+}
+
+.email-g {
+  margin: 2%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.nascita-g {
+  margin-left: 4%;
+  margin-top: 4%;
+}
 </style>

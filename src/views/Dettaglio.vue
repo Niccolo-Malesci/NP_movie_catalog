@@ -3,7 +3,8 @@
     <div class="row g-0">
       <div class="col-md-4">
         <a :href="media.homepage" target="_blank">
-          <img :src="getMediaPosterUrl(media.poster_path)" alt="Locandina del media" class="img-fluid rounded-start media-poster">
+          <img :src="getMediaPosterUrl(media.poster_path)" alt="Locandina del media"
+            class="img-fluid rounded-start media-poster">
         </a>
       </div>
       <div class="col-md-8">
@@ -14,83 +15,85 @@
           <p style="font-style: italic;">Paesi di produzione: {{ getCountries(media.production_countries) }}</p>
           <p style="font-style: italic;">Case di produzione: {{ getCompanies(media.production_companies) }}</p>
           Valutazione:
-          <p v-if="(media.vote_average/2)<=0.25">
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
+          <p v-if="(media.vote_average / 2) <= 0.25">
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
           </p>
-          <p v-else-if="(media.vote_average/2)>0.25 && (media.vote_average/2)<=0.75">
-              <i class="bi bi-star-half" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
+          <p v-else-if="(media.vote_average / 2) > 0.25 && (media.vote_average / 2) <= 0.75">
+            <i class="bi bi-star-half" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
           </p>
-          <p v-else-if="(media.vote_average/2)>0.75 && (media.vote_average/2)<=1.25">
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
+          <p v-else-if="(media.vote_average / 2) > 0.75 && (media.vote_average / 2) <= 1.25">
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
           </p>
-          <p v-else-if="(media.vote_average/2)>1.25 && (media.vote_average/2)<=1.75">
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-half" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
+          <p v-else-if="(media.vote_average / 2) > 1.25 && (media.vote_average / 2) <= 1.75">
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-half" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
           </p>
-          <p v-else-if="(media.vote_average/2)>1.75 && (media.vote_average/2)<=2.25">
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
+          <p v-else-if="(media.vote_average / 2) > 1.75 && (media.vote_average / 2) <= 2.25">
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
           </p>
-          <p v-else-if="(media.vote_average/2)>2.25 && (media.vote_average/2)<=2.75">
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-half" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
+          <p v-else-if="(media.vote_average / 2) > 2.25 && (media.vote_average / 2) <= 2.75">
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-half" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
           </p>
-          <p v-else-if="(media.vote_average/2)>2.75 && (media.vote_average/2)<=3.25">
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
+          <p v-else-if="(media.vote_average / 2) > 2.75 && (media.vote_average / 2) <= 3.25">
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
           </p>
-          <p v-else-if="(media.vote_average/2)>3.25 && (media.vote_average/2)<=3.75">
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-half" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
+          <p v-else-if="(media.vote_average / 2) > 3.25 && (media.vote_average / 2) <= 3.75">
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-half" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
           </p>
-          <p v-else-if="(media.vote_average/2)>3.75 && (media.vote_average/2)<=4.25">
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star" style="color: yellow;"></i>
+          <p v-else-if="(media.vote_average / 2) > 3.75 && (media.vote_average / 2) <= 4.25">
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star" style="color: yellow;"></i>
           </p>
           <p v-else>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
-              <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
+            <i class="bi bi-star-fill" style="color: yellow;"></i>
           </p>
           <p>Popolarità: {{ media.popularity }}</p>
           <p style="font-weight: bold;">{{ getGenres(media.genres) }}</p>
-          <p v-if="media.title" class="card-text" style="color: white; position: absolute; bottom: 0; right: 0; margin: 10px;">
+          <p v-if="media.title" class="card-text"
+            style="color: white; position: absolute; bottom: 0; right: 0; margin: 10px;">
             Durata: {{ media.runtime }} minuti <br> Data di pubblicazione: {{ media.release_date }}
           </p>
           <p v-else class="card-text" style="color: white; position: absolute; bottom: 0; right: 0; margin: 10px;">
-            Numero totale di episodi: {{ media.number_of_episodes }} <br> Data di prima pubblicazione: {{ media.first_air_date }}
+            Numero totale di episodi: {{ media.number_of_episodes }} <br> Data di prima pubblicazione: {{
+              media.first_air_date }}
           </p>
         </div>
       </div>
@@ -99,7 +102,8 @@
   <div class="carousel-container">
     <div class="carousel">
       <div class="carousel-inner">
-        <div v-for="(recommended, index) in recommendedMedia" :key="index" :class="['carousel-item', index < 4 ? 'active' : '']">
+        <div v-for="(recommended, index) in recommendedMedia" :key="index"
+          :class="['carousel-item', index < 4 ? 'active' : '']">
           <img :src="getMediaPosterUrl(recommended.poster_path)" class="d-block w-100" alt="Media Consigliato">
         </div>
       </div>
@@ -122,8 +126,8 @@ export default {
       apiKey: import.meta.env.VITE_API_KEY,
       language: 'it',
       media: {},
-      recommendedMedia: [], 
-      };
+      recommendedMedia: [],
+    };
   },
   created() {
     const mediaId = this.$route.params.id;
@@ -182,20 +186,19 @@ export default {
 
 .carousel-container {
   overflow: hidden;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .carousel {
-  display: inline-block; 
+  display: inline-block;
 }
 
 .carousel-inner {
-  display: flex; 
-  transition: transform 0.5s ease; 
+  display: flex;
+  transition: transform 0.5s ease;
 }
 
 .carousel-item {
-  flex: 0 0 25%; 
-  margin-right: 10px; 
-}
-</style>
+  flex: 0 0 25%;
+  margin-right: 10px;
+}</style>
