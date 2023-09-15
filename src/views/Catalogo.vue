@@ -1,72 +1,64 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-dark">
-    <div class="container-fluid" style="width: max-content;">
-      <a class="navbar-brand" href="#" style="color: red; font-family: fantasy; font-size: xx-large;">{{ $t('appTitle')
-      }}</a>
-    </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#" style="color: white;">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><button @click="setCurrentCategory('movie')"
-              :class="{ 'active': currentCategory === 'movie' }">Film</button></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><button style="width: max-content;" @click="setCurrentCategory('tv')"
-              :class="{ 'active': currentCategory === 'tv' }">Serie-TV </button></a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-            style="color: white;">Lingua</a>
+<nav class="navbar navbar-expand-lg bg-dark">
+  <div class="container-fluid" style="width: max-content;">
+    <a class="navbar-brand" href="#" style="color: red; font-family: fantasy; font-size: xx-large;">{{ $t('appTitle') }}</a>
+  </div>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#" style="color: white;">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><button style="width: max-content;" @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie-TV </button></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">Lingua</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"><button @click="toggleLanguage">{{ currentLanguage === 'it' ? 'English'
-              : 'Italian' }}</button></a></li>
+            <li><a class="dropdown-item" href="#"><button @click="toggleLanguage">{{ currentLanguage === 'it' ? 'English' : 'Italian' }}</button></a></li>
           </ul>
         </li>
       </ul>
     </div>
-    <form class="d-flex" role="search">
-      <input v-model="searchQuery" @input="handleSearchInput" :placeholder="$t('searchPlaceholder')"
-        class="search-input" />
-    </form>
-  </nav>
+  <form class="d-flex" role="search" >
+    <input v-model="searchQuery" @input="handleSearchInput" :placeholder="$t('searchPlaceholder')" class="search-input" />
+  </form>
+</nav> 
   <div v-if="movies.length" class="movie-list">
     <div v-for="movie in movies" :key="movie.id" class="movie-item">
       <div class="card">
-        <router-link v-if="currentCategory === 'movie'"
-          :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'movie' } }">
+        <router-link v-if="currentCategory==='movie'" :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'movie' }}">
           <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
         </router-link>
-        <router-link v-else :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'tv' } }">
+        <router-link v-else :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'tv' }}">
           <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
         </router-link>
         <div class="card-body" style="min-height: 185px;">
           <h5 v-if="movie.title" class="card-title">{{ movie.title }}</h5>
           <h5 v-else class="card-title">{{ movie.name }}</h5>
           <p class="card-text" v-if="!movie.expandedDescription">
-            {{ truncateDescription(movie.overview) }}
-            <a v-if="shouldShowExpandButton(movie)" @click="toggleDescription(movie)" class="expand-button">
-              {{ $t('showMore') }}
-            </a>
-          </p>
-          <p class="card-text" v-else>
-            {{ movie.overview }}
-            <a @click="toggleDescription(movie)" class="expand-button"> {{ $t('showLess') }} </a>
-          </p>
+              {{ truncateDescription(movie.overview) }}
+              <a v-if="shouldShowExpandButton(movie)" @click="toggleDescription(movie)" class="expand-button">
+                {{ $t('showMore') }}
+              </a>
+            </p>
+            <p class="card-text" v-else>
+              {{ movie.overview }}
+              <a @click="toggleDescription(movie)" class="expand-button"> {{ $t('showLess') }} </a>
+            </p>
         </div>
       </div>
     </div>
   </div>
-  <div class="pagination-buttons">
-    <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
-    <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
-  </div>
+<div class="pagination-buttons">
+  <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
+  <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
+</div>
 </template>
 
 <script>
@@ -88,7 +80,7 @@ export default {
   },
   methods: {
     fetchMovies() {
-      const apiKey = import.meta.env.VITE_API_KEY;
+      const apiKey = '512f81af17888b517a1b456fbce07689';
       const language = this.currentLanguage;
       const page = this.currentPage;
       const query = this.searchQuery;
@@ -118,7 +110,7 @@ export default {
     setCurrentCategory(category) {
       this.currentCategory = category;
       this.currentPage = 1;
-      this.searchQuery = '';
+      this.searchQuery = ''; 
       this.fetchMovies();
     },
     fetchPrevMovies() {
@@ -160,7 +152,7 @@ export default {
       movie.expandedDescription = !movie.expandedDescription;
     },
     handleSearchInput() {
-      console.log("Ricerca in corso con query:", this.searchQuery);
+    console.log("Ricerca in corso con query:", this.searchQuery);
       if (this.searchQuery.length >= 2) {
         this.currentPage = 1;
         this.fetchMovies();
@@ -178,13 +170,11 @@ export default {
 .expand-button {
   color: white;
 }
-
 .expand-button:hover {
   text-decoration: underline;
   cursor: pointer;
   color: blueviolet;
 }
-
 .card-img-top {
   height: 450px;
   object-fit: cover;
@@ -239,4 +229,5 @@ button.active {
   background-color: #e50914;
   font-weight: bold;
   color: #fff;
-}</style>
+}
+</style>
