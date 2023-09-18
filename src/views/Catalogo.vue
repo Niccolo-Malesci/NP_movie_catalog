@@ -1,8 +1,10 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-dark">
+  <div class="main">
+   <nav class="navbar navbar-expand-lg bg-dark navbar">
     <div class="container-fluid" style="width: max-content;">
-      <a class="navbar-brand" href="#" style="color: red; font-family: fantasy; font-size: xx-large;">{{ $t('appTitle')
-      }}</a>
+      <router-link to="/catalogo" class="navbar-link" style="color: red; font-family: fantasy; font-size: xx-large; width: max-content; text-decoration: none;" @click="goToHomePage">
+        {{ $t('appTitle') }}
+      </router-link>
     </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,9 +12,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#" style="color: white;">Home</a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="#"><button @click="setCurrentCategory('movie')"
               :class="{ 'active': currentCategory === 'movie' }">Film</button></a>
@@ -36,7 +35,7 @@
         class="search-input" />
     </form>
   </nav>
-  <div v-if="movies.length" class="movie-list">
+  <div  id="movie-list" v-if="movies.length" class="movie-list">
     <div v-for="movie in movies" :key="movie.id" class="movie-item">
       <div class="card">
         <router-link v-if="currentCategory === 'movie'"
@@ -66,6 +65,7 @@
   <div class="pagination-buttons">
     <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
     <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
+  </div>
   </div>
 </template>
 
@@ -125,13 +125,21 @@ export default {
       if (this.currentPage > 1) {
         this.currentPage--;
         this.fetchMovies();
+        this.scrollToMovieList();
       }
     },
     fetchNextMovies() {
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
         this.fetchMovies();
+        this.scrollToMovieList();
       }
+    },
+    scrollToMovieList() {
+    const movieList = document.getElementById("movie-list");
+    if (movieList) {
+      movieList.scrollIntoView({ behavior: "smooth" });
+    }
     },
     toggleLanguage() {
       this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
@@ -170,11 +178,25 @@ export default {
         this.fetchMovies();
       }
     },
+    goToHomePage() {
+    this.currentPage = 1;
+    this.fetchMovies();
+  }
   },
 };
 </script>
 
 <style scoped>
+.main {
+  margin-top: 87px;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
 .expand-button {
   color: white;
 }

@@ -1,4 +1,5 @@
 <template>
+  <div class="main">
   <div class="card mb-3" style="max-width: 70%;">
     <div class="row g-0">
       <div class="col-md-4">
@@ -113,8 +114,8 @@
         <div :class="['carousel-item', index === currentSlideIndex ? 'active' : '']"
           v-for="(recommended, index) in chunkedRecommendedMedia" :key="index">
           <div class="row" style="width: 95%;">
-            <router-link :to="{ name: 'dettaglio', params: { id: media.id, media_type: this.currentCategory } }"
-              v-for="(media, mediaIndex) in recommended" :key="mediaIndex" class="col-md-2">
+            <router-link :to="{ name: 'dettaglio', params: { id: media.id, media_type: this.currentCategory } }" 
+            v-for="(media, mediaIndex) in recommended" :key="mediaIndex" class="col-md-2" @click="fetchMediaDetails(media.id, this.currentCategory)">
               <img :src="getMediaPosterUrl(media.poster_path)" class="d-block w-100" alt="Media Consigliato">
             </router-link>
           </div>
@@ -130,6 +131,7 @@
       </button>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -207,6 +209,9 @@ export default {
 </script>
 
 <style scoped>
+.main {
+  margin-top: 87px;
+}
 .card {
   background-color: crimson;
   color: white;
