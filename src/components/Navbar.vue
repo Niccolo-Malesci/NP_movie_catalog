@@ -36,7 +36,6 @@
   </nav>
 </template>
 
-
 <script>
 export default {
   data() {
