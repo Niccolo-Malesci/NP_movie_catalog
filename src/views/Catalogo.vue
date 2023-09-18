@@ -1,5 +1,8 @@
 <template>
   <div class="main">
+    <Navbar 
+    @search="performSearch"
+    @language-change="changeLanguage" />
   <div  id="movie-list" v-if="movies.length" class="movie-list">
     <div v-for="movie in movies" :key="movie.id" class="movie-item">
       <div class="card">
@@ -158,7 +161,16 @@ export default {
         goToHomePage() {
             this.currentPage = 1;
             this.fetchMovies();
-        }
+        },
+      performSearch(query) {
+      this.searchQuery = query; 
+      this.currentPage = 1; 
+      this.fetchMovies();
+      },
+      changeLanguage(newLanguage) {
+      this.currentLanguage = newLanguage;
+      this.fetchMovies();
+    },
     },
     components: { Navbar }
 };
