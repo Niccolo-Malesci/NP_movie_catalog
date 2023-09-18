@@ -1,36 +1,49 @@
 <template>
   <div class="main">
-  <div  id="movie-list" v-if="movies.length" class="movie-list">
-    <div v-for="movie in movies" :key="movie.id" class="movie-item">
-      <div class="card">
-        <router-link v-if="currentCategory === 'movie'"
-          :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'movie' } }">
-          <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
-        </router-link>
-        <router-link v-else :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'tv' } }">
-          <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
-        </router-link>
-        <div class="card-body" style="min-height: 185px;">
-          <h5 v-if="movie.title" class="card-title">{{ movie.title }}</h5>
-          <h5 v-else class="card-title">{{ movie.name }}</h5>
-          <p class="card-text" v-if="!movie.expandedDescription">
-            {{ truncateDescription(movie.overview) }}
-            <a v-if="shouldShowExpandButton(movie)" @click="toggleDescription(movie)" class="expand-button">
-              {{ $t('showMore') }}
-            </a>
-          </p>
-          <p class="card-text" v-else>
-            {{ movie.overview }}
-            <a @click="toggleDescription(movie)" class="expand-button"> {{ $t('showLess') }} </a>
-          </p>
+    <div id="movie-list" v-if="movies.length" class="movie-list">
+      <div v-for="movie in movies" :key="movie.id" class="movie-item">
+        <div class="card">
+          <router-link v-if="currentCategory === 'movie'"
+            :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'movie' } }">
+            <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+          </router-link>
+          <router-link v-else :to="{ name: 'dettaglio', params: { id: movie.id, media_type: 'tv' } }">
+            <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+          </router-link>
+          <div class="card-body" style="min-height: 185px;">
+            <h5 v-if="movie.title" class="card-title">{{ movie.title }}</h5>
+            <h5 v-else class="card-title">{{ movie.name }}</h5>
+            <p class="card-text" v-if="!movie.expandedDescription">
+              {{ truncateDescription(movie.overview) }}
+              <a v-if="shouldShowExpandButton(movie)" @click="toggleDescription(movie)" class="expand-button">
+                {{ $t('showMore') }}
+              </a>
+            </p>
+            <p class="card-text" v-else>
+              {{ movie.overview }}
+              <a @click="toggleDescription(movie)" class="expand-button"> {{ $t('showLess') }} </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="pagination-buttons">
-    <button @click="fetchPrevMovies" v-if="currentPage > 1" class="pagination-button">Pagina Precedente</button>
-    <button @click="fetchNextMovies" v-if="currentPage < totalPages" class="pagination-button">Pagina Successiva</button>
-  </div>
+    <ul class="pagination justify-content-center" style="margin-top: 1%;">
+      <li class="page-item">
+        <a @click="fetchPrevMovies" v-if="currentPage > 1" class="page-link">Pagina precedente</a>
+      </li>
+      <li v-if="currentPage != 1" class="page-item"><a class="page-link" href="#" @click="goToPage(1)">1</a></li>
+      <li class="page-item"><a class="page-link" href="#" v-if="currentPage > 2" @click="goToPage(currentPage - 1)">{{
+        currentPage - 1 }}</a></li>
+      <li class="page-item"><a class="page-link current-page" href="#">{{ currentPage }}</a></li>
+      <li class="page-item"><a class="page-link" href="#" v-if="currentPage < totalPages - 1"
+          @click="goToPage(currentPage + 1)">{{ currentPage + 1 }}</a></li>
+      <li v-if="currentPage != totalPages" class="page-item"><a class="page-link" href="#"
+          @click="goToPage(totalPages)">{{
+            totalPages }}</a></li>
+      <li class="page-item">
+        <a @click="fetchNextMovies" v-if="currentPage < totalPages" class="page-link" href="#">Pagina successiva</a>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -39,135 +52,154 @@ import axios from 'axios';
 import Navbar from '../components/Navbar.vue';
 
 export default {
-    data() {
-        return {
-            movies: [],
-            currentPage: 1,
-            totalPages: 1,
-            currentLanguage: 'it',
-            searchQuery: '',
-            currentCategory: 'movie',
-        };
-    },
-    mounted() {
-        this.$route.query.type;
-        console.log(this.$route.query.type);
-        if (this.$route.query.type == 'tv') {
-            this.currentCategory = 'tv';
-        }
+  data() {
+    return {
+      movies: [],
+      currentPage: 1,
+      totalPages: 1,
+      currentLanguage: 'it',
+      searchQuery: '',
+      currentCategory: 'movie',
+    };
+  },
+  mounted() {
+    this.$route.query.type;
+    console.log(this.$route.query.type);
+    if (this.$route.query.type == 'tv') {
+      this.currentCategory = 'tv';
+    }
+    this.fetchMovies();
+  },
+  methods: {
+    goToPage(page) {
+      if (page >= 1 && page <= this.totalPages) {
+        this.currentPage = page;
         this.fetchMovies();
+        this.scrollToMovieList();
+      }
     },
-    methods: {
-        fetchMovies() {
-          this.$route.query.type;
-        console.log(this.$route.query.type);
-        if (this.$route.query.type == 'tv') {
-            this.currentCategory = 'tv';
-        }
-        else if (this.$route.query.type == 'film') {
-            this.currentCategory = 'movie';
-        }
-            const apiKey = import.meta.env.VITE_API_KEY;
-            const language = this.currentLanguage;
-            const page = this.currentPage;
-            const query = this.searchQuery;
-            const category = this.currentCategory;
-            let url = `https://api.themoviedb.org/3/trending/${this.currentCategory}/week?page=${page}&api_key=${apiKey}&language=${language}`;
-            let url2 = `https://api.themoviedb.org/3/search/${category}?api_key=${apiKey}&language=${language}&page=${page}${query ? `&query=${query}` : ''}`;
-            if (this.searchQuery) {
-                url = url2;
-            }
-            axios
-                .get(url)
-                .then((response) => {
-                this.totalPages = response.data.total_pages;
-                this.movies = response.data.results.map((movie) => {
-                    return {
-                        ...movie,
-                        overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
-                    };
-                });
-            })
-                .catch((error) => {
-                console.error('Errore durante il recupero dei film/serie TV:', error);
-            });
-        },
-        setCurrentCategory(category) {
-            this.currentCategory = category;
-            this.currentPage = 1;
-            this.searchQuery = '';
-            this.fetchMovies();
-        },
-        fetchPrevMovies() {
-            if (this.currentPage > 1) {
-                this.currentPage--;
-                this.fetchMovies();
-                this.scrollToMovieList();
-            }
-        },
-        fetchNextMovies() {
-            if (this.currentPage < this.totalPages) {
-                this.currentPage++;
-                this.fetchMovies();
-                this.scrollToMovieList();
-            }
-        },
-        scrollToMovieList() {
-            const movieList = document.getElementById("movie-list");
-            if (movieList) {
-                movieList.scrollIntoView({ behavior: "smooth" });
-            }
-        },
-        toggleLanguage() {
-            this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
-            this.fetchMovies();
-            this.$i18n.locale = this.currentLanguage;
-        },
-        getMoviePosterUrl(posterPath) {
-            if (!posterPath) {
-                return '';
-            }
-            return `https://image.tmdb.org/t/p/w500/${posterPath}`;
-        },
-        getTranslatedOverview(overview, language) {
-            return overview;
-        },
-        shouldShowExpandButton(movie) {
-            return movie.overview.length > 100;
-        },
-        truncateDescription(description) {
-            if (description.length <= 100) {
-                return description;
-            }
-            return description.substring(0, 100) + '...';
-        },
-        toggleDescription(movie) {
-            movie.expandedDescription = !movie.expandedDescription;
-        },
-        handleSearchInput() {
-            console.log("Ricerca in corso con query:", this.searchQuery);
-            if (this.searchQuery.length >= 2) {
-                this.currentPage = 1;
-                this.fetchMovies();
-            }
-            if (this.searchQuery.length === 0) {
-                this.currentPage = 1;
-                this.fetchMovies();
-            }
-        },
-        goToHomePage() {
-            this.currentPage = 1;
-            this.fetchMovies();
-        }
+    fetchMovies() {
+      this.$route.query.type;
+      console.log(this.$route.query.type);
+      if (this.$route.query.type == 'tv') {
+        this.currentCategory = 'tv';
+      }
+      else if (this.$route.query.type == 'film') {
+        this.currentCategory = 'movie';
+      }
+      const apiKey = import.meta.env.VITE_API_KEY;
+      const language = this.currentLanguage;
+      const page = this.currentPage;
+      const query = this.searchQuery;
+      const category = this.currentCategory;
+      let url = `https://api.themoviedb.org/3/trending/${this.currentCategory}/week?page=${page}&api_key=${apiKey}&language=${language}`;
+      let url2 = `https://api.themoviedb.org/3/search/${category}?api_key=${apiKey}&language=${language}&page=${page}${query ? `&query=${query}` : ''}`;
+      if (this.searchQuery) {
+        url = url2;
+      }
+      axios
+        .get(url)
+        .then((response) => {
+          this.totalPages = response.data.total_pages - 500;
+          this.movies = response.data.results.map((movie) => {
+            return {
+              ...movie,
+              overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
+            };
+          });
+        })
+        .catch((error) => {
+          console.error('Errore durante il recupero dei film/serie TV:', error);
+        });
     },
-    components: { Navbar }
+    setCurrentCategory(category) {
+      this.currentCategory = category;
+      this.currentPage = 1;
+      this.searchQuery = '';
+      this.fetchMovies();
+    },
+    fetchPrevMovies() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.fetchMovies();
+        this.scrollToMovieList();
+      }
+    },
+    fetchNextMovies() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.fetchMovies();
+        this.scrollToMovieList();
+      }
+    },
+    scrollToMovieList() {
+      const movieList = document.getElementById("movie-list");
+      if (movieList) {
+        movieList.scrollIntoView({ behavior: "smooth" });
+      }
+    },
+    toggleLanguage() {
+      this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
+      this.fetchMovies();
+      this.$i18n.locale = this.currentLanguage;
+    },
+    getMoviePosterUrl(posterPath) {
+      if (!posterPath) {
+        return '';
+      }
+      return `https://image.tmdb.org/t/p/w500/${posterPath}`;
+    },
+    getTranslatedOverview(overview, language) {
+      return overview;
+    },
+    shouldShowExpandButton(movie) {
+      return movie.overview.length > 100;
+    },
+    truncateDescription(description) {
+      if (description.length <= 100) {
+        return description;
+      }
+      return description.substring(0, 100) + '...';
+    },
+    toggleDescription(movie) {
+      movie.expandedDescription = !movie.expandedDescription;
+    },
+    handleSearchInput() {
+      console.log("Ricerca in corso con query:", this.searchQuery);
+      if (this.searchQuery.length >= 2) {
+        this.currentPage = 1;
+        this.fetchMovies();
+      }
+      if (this.searchQuery.length === 0) {
+        this.currentPage = 1;
+        this.fetchMovies();
+      }
+    },
+    goToHomePage() {
+      this.currentPage = 1;
+      this.fetchMovies();
+    }
+  },
+  components: { Navbar }
 };
 </script>
 
 <style scoped>
+.page-link {
+  color: black;
+  border: 1px solid red;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.current-page {
+  background-color: red;
+  color: white;
+}
+
 .main {
   margin-top: 87px;
 }
+
 .navbar {
   position: fixed;
   top: 0;
@@ -175,6 +207,7 @@ export default {
   right: 0;
   z-index: 1000;
 }
+
 .expand-button {
   color: white;
 }
@@ -239,4 +272,5 @@ button.active {
   background-color: #e50914;
   font-weight: bold;
   color: #fff;
-}</style>
+}
+</style>
