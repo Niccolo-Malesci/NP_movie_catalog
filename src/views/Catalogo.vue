@@ -306,4 +306,5 @@ button.active {
   .movie-list {
     grid-template-columns: repeat(1, 1fr);
   }
-}</style>
+}
+</style>
