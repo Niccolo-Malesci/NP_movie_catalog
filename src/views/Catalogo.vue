@@ -1,40 +1,5 @@
 <template>
   <div class="main">
-   <nav class="navbar navbar-expand-lg bg-dark navbar">
-    <div class="container-fluid" style="width: max-content;">
-      <router-link to="/catalogo" class="navbar-link" style="color: red; font-family: fantasy; font-size: xx-large; width: max-content; text-decoration: none;" @click="goToHomePage">
-        {{ $t('appTitle') }}
-      </router-link>
-    </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#"><button @click="setCurrentCategory('movie')"
-              :class="{ 'active': currentCategory === 'movie' }">Film</button></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><button style="width: max-content;" @click="setCurrentCategory('tv')"
-              :class="{ 'active': currentCategory === 'tv' }">Serie-TV </button></a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-            style="color: white;">Lingua</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"><button @click="toggleLanguage">{{ currentLanguage === 'it' ? 'English'
-              : 'Italian' }}</button></a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-    <form class="d-flex" role="search">
-      <input v-model="searchQuery" @input="handleSearchInput" :placeholder="$t('searchPlaceholder')"
-        class="search-input" />
-    </form>
-  </nav>
   <div  id="movie-list" v-if="movies.length" class="movie-list">
     <div v-for="movie in movies" :key="movie.id" class="movie-item">
       <div class="card">
@@ -71,118 +36,131 @@
 
 <script>
 import axios from 'axios';
+import Navbar from '../components/Navbar.vue';
 
 export default {
-  data() {
-    return {
-      movies: [],
-      currentPage: 1,
-      totalPages: 1,
-      currentLanguage: 'it',
-      searchQuery: '',
-      currentCategory: 'movie',
-    };
-  },
-  created() {
-    this.fetchMovies();
-  },
-  methods: {
-    fetchMovies() {
-      const apiKey = import.meta.env.VITE_API_KEY;
-      const language = this.currentLanguage;
-      const page = this.currentPage;
-      const query = this.searchQuery;
-      const category = this.currentCategory;
-      let url = `https://api.themoviedb.org/3/trending/${this.currentCategory}/week?page=${page}&api_key=${apiKey}&language=${language}`;
-      let url2 = `https://api.themoviedb.org/3/search/${category}?api_key=${apiKey}&language=${language}&page=${page}${query ? `&query=${query}` : ''}`;
-
-      if (this.searchQuery) {
-        url = url2;
-      }
-
-      axios
-        .get(url)
-        .then((response) => {
-          this.totalPages = response.data.total_pages;
-          this.movies = response.data.results.map((movie) => {
-            return {
-              ...movie,
-              overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
-            };
-          });
-        })
-        .catch((error) => {
-          console.error('Errore durante il recupero dei film/serie TV:', error);
-        });
+    data() {
+        return {
+            movies: [],
+            currentPage: 1,
+            totalPages: 1,
+            currentLanguage: 'it',
+            searchQuery: '',
+            currentCategory: 'movie',
+        };
     },
-    setCurrentCategory(category) {
-      this.currentCategory = category;
-      this.currentPage = 1;
-      this.searchQuery = '';
-      this.fetchMovies();
-    },
-    fetchPrevMovies() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
+    mounted() {
+        this.$route.query.type;
+        console.log(this.$route.query.type);
+        if (this.$route.query.type == 'tv') {
+            this.currentCategory = 'tv';
+        }
         this.fetchMovies();
-        this.scrollToMovieList();
-      }
     },
-    fetchNextMovies() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-        this.fetchMovies();
-        this.scrollToMovieList();
-      }
+    methods: {
+        fetchMovies() {
+          this.$route.query.type;
+        console.log(this.$route.query.type);
+        if (this.$route.query.type == 'tv') {
+            this.currentCategory = 'tv';
+        }
+        else if (this.$route.query.type == 'film') {
+            this.currentCategory = 'movie';
+        }
+            const apiKey = import.meta.env.VITE_API_KEY;
+            const language = this.currentLanguage;
+            const page = this.currentPage;
+            const query = this.searchQuery;
+            const category = this.currentCategory;
+            let url = `https://api.themoviedb.org/3/trending/${this.currentCategory}/week?page=${page}&api_key=${apiKey}&language=${language}`;
+            let url2 = `https://api.themoviedb.org/3/search/${category}?api_key=${apiKey}&language=${language}&page=${page}${query ? `&query=${query}` : ''}`;
+            if (this.searchQuery) {
+                url = url2;
+            }
+            axios
+                .get(url)
+                .then((response) => {
+                this.totalPages = response.data.total_pages;
+                this.movies = response.data.results.map((movie) => {
+                    return {
+                        ...movie,
+                        overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
+                    };
+                });
+            })
+                .catch((error) => {
+                console.error('Errore durante il recupero dei film/serie TV:', error);
+            });
+        },
+        setCurrentCategory(category) {
+            this.currentCategory = category;
+            this.currentPage = 1;
+            this.searchQuery = '';
+            this.fetchMovies();
+        },
+        fetchPrevMovies() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+                this.fetchMovies();
+                this.scrollToMovieList();
+            }
+        },
+        fetchNextMovies() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+                this.fetchMovies();
+                this.scrollToMovieList();
+            }
+        },
+        scrollToMovieList() {
+            const movieList = document.getElementById("movie-list");
+            if (movieList) {
+                movieList.scrollIntoView({ behavior: "smooth" });
+            }
+        },
+        toggleLanguage() {
+            this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
+            this.fetchMovies();
+            this.$i18n.locale = this.currentLanguage;
+        },
+        getMoviePosterUrl(posterPath) {
+            if (!posterPath) {
+                return '';
+            }
+            return `https://image.tmdb.org/t/p/w500/${posterPath}`;
+        },
+        getTranslatedOverview(overview, language) {
+            return overview;
+        },
+        shouldShowExpandButton(movie) {
+            return movie.overview.length > 100;
+        },
+        truncateDescription(description) {
+            if (description.length <= 100) {
+                return description;
+            }
+            return description.substring(0, 100) + '...';
+        },
+        toggleDescription(movie) {
+            movie.expandedDescription = !movie.expandedDescription;
+        },
+        handleSearchInput() {
+            console.log("Ricerca in corso con query:", this.searchQuery);
+            if (this.searchQuery.length >= 2) {
+                this.currentPage = 1;
+                this.fetchMovies();
+            }
+            if (this.searchQuery.length === 0) {
+                this.currentPage = 1;
+                this.fetchMovies();
+            }
+        },
+        goToHomePage() {
+            this.currentPage = 1;
+            this.fetchMovies();
+        }
     },
-    scrollToMovieList() {
-    const movieList = document.getElementById("movie-list");
-    if (movieList) {
-      movieList.scrollIntoView({ behavior: "smooth" });
-    }
-    },
-    toggleLanguage() {
-      this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
-      this.fetchMovies();
-      this.$i18n.locale = this.currentLanguage;
-    },
-    getMoviePosterUrl(posterPath) {
-      if (!posterPath) {
-        return '';
-      }
-      return `https://image.tmdb.org/t/p/w500/${posterPath}`;
-    },
-    getTranslatedOverview(overview, language) {
-      return overview;
-    },
-    shouldShowExpandButton(movie) {
-      return movie.overview.length > 100;
-    },
-    truncateDescription(description) {
-      if (description.length <= 100) {
-        return description;
-      }
-      return description.substring(0, 100) + '...';
-    },
-    toggleDescription(movie) {
-      movie.expandedDescription = !movie.expandedDescription;
-    },
-    handleSearchInput() {
-      console.log("Ricerca in corso con query:", this.searchQuery);
-      if (this.searchQuery.length >= 2) {
-        this.currentPage = 1;
-        this.fetchMovies();
-      }
-      if (this.searchQuery.length === 0) {
-        this.currentPage = 1;
-        this.fetchMovies();
-      }
-    },
-    goToHomePage() {
-    this.currentPage = 1;
-    this.fetchMovies();
-  }
-  },
+    components: { Navbar }
 };
 </script>
 

@@ -12,10 +12,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="#"><button @click="setCurrentCategory('movie')" :class="{ 'active': currentCategory === 'movie' }">Film</button></a>
+            <router-link class="nav-link" style="color: white;" to="/catalogo?type=film">Film</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><button style="width: max-content;" @click="setCurrentCategory('tv')" :class="{ 'active': currentCategory === 'tv' }">Serie-TV </button></a>
+            <router-link class="nav-link" style="color: white;" to="/catalogo?type=tv">Serie-TV</router-link>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -61,7 +61,7 @@
       },
       goToHomePage() {
         this.$router.push({ path: '/catalogo' });
-      }
+      },
     },
   };
   </script>
