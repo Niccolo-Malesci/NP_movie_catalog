@@ -251,4 +251,29 @@ button.active {
   background-color: #e50914;
   font-weight: bold;
   color: #fff;
-}</style>
+}
+
+@media (max-width: 1200px) {
+  .movie-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .movie-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .movie-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+</style>
