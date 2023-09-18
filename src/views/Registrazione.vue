@@ -1,6 +1,6 @@
 <template>
   <div class="card card position-absolute top-50 start-50 translate-middle" style="width: 30rem;">
-    <form>
+    <form onsubmit="return false;">
       <div class="mb-3">
         <h1
           style="text-align: center; margin-top: 2%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">

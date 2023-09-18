@@ -1,6 +1,6 @@
 <template>
   <div class="card position-absolute top-50 start-50 translate-middle" style="width: 18rem;">
-    <form>
+    <form onsubmit="return false;">
       <div class="mb-3">
         <h1 style="text-align: center; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Accedi
         </h1>
@@ -38,7 +38,6 @@ export default {
   methods: {
     access() {
       if (this.email_accesso == '') {
-        alert('e-mail mancante')
         return false
       }
       if (this.password_accesso == '') {
@@ -50,7 +49,7 @@ export default {
         return false
       }
       this.$router.push('/catalogo')
-    }
+    },
   }
 };
 </script>
