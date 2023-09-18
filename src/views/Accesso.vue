@@ -38,6 +38,7 @@ export default {
   methods: {
     access() {
       if (this.email_accesso == '') {
+        alert('e-mail mancante')
         return false
       }
       if (this.password_accesso == '') {
