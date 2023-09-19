@@ -18,10 +18,11 @@
                 <div :class="['carousel-item', index === currentSlideIndex ? 'active' : '']"
                     v-for="(recommended, index) in chunkedRecommendedMedia" :key="index">
                     <div class="row" style="width: 95%;">
-                        <a :href="'/dettaglio/' + currentCategory + '/' + media.id"
-                            v-for="(media, mediaIndex) in recommended" :key="mediaIndex" class="col-md-2">
+                        <router-link :to="'/dettaglio/' + currentCategory + '/' + media.id"
+                            v-for="(media, mediaIndex) in recommended" :key="mediaIndex" class="col-md-2"
+                            @click="redirectToDetail(media.id, currentCategory)">
                             <img :src="getMediaPosterUrl(media.poster_path)" class="d-block w-100" alt="Media Consigliato">
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -68,9 +69,9 @@ export default {
             }
             return `https://image.tmdb.org/t/p/original/${posterPath}`;
         },
-        /*redirectToDetail(mediaId, category) {
+        redirectToDetail(mediaId, category) {
             this.$router.push(`/dettaglio/${category}/${mediaId}`);
-        },*/
+        },
     },
 };
 </script>

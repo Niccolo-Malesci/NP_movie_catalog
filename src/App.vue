@@ -1,22 +1,22 @@
 <template>
   <div id="app">
-    <Navbar/>
+    <Navbar />
     <router-view />
   </div>
-  </template>
+</template>
   
-  <script>
+<script>
 import Navbar from './components/Navbar.vue';
 
 export default {
   components: {
   },
 }
-  </script>
+</script>
   
-  <style>
-  /*:key="$route.fullPath"*/
-  body {
-    background-color: black;
-  }
+<style>
+/*:key="$route.fullPath"*/
+body {
+  background-color: black;
+}
 </style>
