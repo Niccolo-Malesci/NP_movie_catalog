@@ -14,10 +14,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <router-link class="nav-link" to="/catalogo?type=film">Film</router-link>
+          <button @click="linkFilm" :style="{ color: currentCategory === 'film' ? 'red' : 'white' }"
+            class="nav-link">Film</button>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/catalogo?type=tv">Serie-TV</router-link>
+          <button @click="linkTv" :style="{ color: currentCategory === 'tv' ? 'red' : 'white' }" class="nav-link"
+            to="/catalogo?type=tv">Serie-TV</button>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -46,9 +48,13 @@ export default {
     };
   },
   methods: {
-    setCurrentCategory(category) {
-      this.currentCategory = category;
-      this.$emit('category-change', category);
+    linkFilm() {
+      this.$router.push('/catalogo?type=film');
+      this.currentCategory = 'film'
+    },
+    linkTv() {
+      this.$router.push('/catalogo?type=tv');
+      this.currentCategory = 'tv'
     },
     toggleLanguage() {
       this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
