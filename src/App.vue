@@ -1,22 +1,24 @@
 <template>
-  <div class="main">
-    <Navbar @language-change="changeLanguage" />
+  <div id="app">
+    <Navbar/>
     <router-view />
   </div>
-</template>
-
-<script>
+  </template>
+  
+  <script>
 import Navbar from './components/Navbar.vue';
 
 export default {
   components: {
     Navbar,
   },
-};
-</script>
-
-<style>
-body {
-  background-color: black;
 }
+  </script>
+  
+  <style>
+  /*:key="$route.fullPath"*/
+  body {
+    background-color: black;
+  }
 </style>
+  
