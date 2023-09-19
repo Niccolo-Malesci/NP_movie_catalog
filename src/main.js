@@ -17,12 +17,34 @@ const i18n = createI18n({
       appTitle: 'NP Catalogo Film',
       showMore: 'Mostra altro',
       showLess: 'Mostra meno',
+      mediaDetails: {
+        title: "Titolo",
+        tagline: "Slogan",
+        overview: "Panoramica",
+        productionCountries: "Paesi di produzione",
+        productionCompanies: "Case di produzione",
+        popularity: "Popolarità",
+        genres: "Generi",
+        duration: "Durata",
+        dateOfPublication: "Data di pubblicazione"
+      }
     },
     en: {
       searchPlaceholder: 'Search...',
       appTitle: "NP's Movie Catalog",
       showMore: 'Show more',
       showLess: 'Show less',
+      mediaDetails: {
+        title: "Title",
+        tagline: "Tagline",
+        overview: "Overview",
+        productionCountries: "Production Countries",
+        productionCompanies: "Production Companies",
+        popularity: "Popularity",
+        genres: "Genres",
+        duration: "Duration",
+        dateOfPublication: "Date of publication"
+      }
     },
   },
 });

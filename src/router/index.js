@@ -1,33 +1,45 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Accesso from '/src/views/Accesso.vue'
-import Catalogo from '/src/views/Catalogo.vue'
-import Registrazione from '/src/views/Registrazione.vue'
-import Dettaglio from '/src/views/Dettaglio.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import Accesso from '../views/Accesso.vue';
+import CatalogoTv from '../views/CatalogoTv.vue';
+import Registrazione from '../views/Registrazione.vue';
+import MovieDetail from '../views/MovieDetail.vue';
+import TvShowDetail from '../views/TvShowDetail.vue';
+import CatalogoFilm from '../views/CatalogoFilm.vue';
 
-export const router = createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: '/',
       name: 'accesso',
-      component: Accesso
+      component: Accesso,
     },
     {
-      path: '/catalogo',
-      name: 'catalogo',
-      component: Catalogo
+      path: '/catalogo/tv',
+      name: 'catalogo-tv',
+      component: CatalogoTv,
+    },
+    {
+      path: '/catalogo/film',
+      name: 'catalogo-film',
+      component: CatalogoFilm,
     },
     {
       path: '/registrazione',
       name: 'registrazione',
-      component: Registrazione
+      component: Registrazione,
     },
     {
-      path: '/catalogo/dettaglio/:id/:media_type',
-      name: 'dettaglio',
-      component: Dettaglio
-    }
-  ]
-})
+      path: '/dettaglio/movie/:id',
+      name: 'movie-detail',
+      component: MovieDetail,
+    },
+    {
+      path: '/dettaglio/tv/:id',
+      name: 'tv-show-detail',
+      component: TvShowDetail,
+    },
+  ],
+});
 
-export default router
+export default router;

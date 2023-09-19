@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-dark navbar">
     <div class="container-fluid" style="width: max-content;">
-      <router-link to="/catalogo?type=film" class="navbar-link"
+      <router-link to="/catalogo/film" class="navbar-link"
         style="color: red; font-family: fantasy; font-size: xx-large; width: max-content; text-decoration: none;"
         @click="goToHomePage">
         {{ $t('appTitle') }}
@@ -49,11 +49,11 @@ export default {
   },
   methods: {
     linkFilm() {
-      this.$router.push('/catalogo?type=film');
+      this.$router.push('/catalogo/film');
       this.currentCategory = 'film'
     },
     linkTv() {
-      this.$router.push('/catalogo?type=tv');
+      this.$router.push('/catalogo/tv');
       this.currentCategory = 'tv'
     },
     toggleLanguage() {
@@ -71,7 +71,7 @@ export default {
       }
     },
     goToHomePage() {
-      this.$router.push({ path: '/catalogo' });
+      this.$router.push({ path: '/catalogo/film' });
     },
   },
 };
