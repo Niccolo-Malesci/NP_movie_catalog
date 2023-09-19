@@ -2,7 +2,7 @@
     <div class="main">
       <Navbar @language-change="changeLanguage" />
       <MediaDetailCard :media="tvShow" />
-      <MediaCarousel :recommendedMedia="recommendedTvShows" :currentSlideIndex="currentSlideIndex" />
+      <MediaCarousel :chunkedRecommendedMedia="recommendedTvShows" :currentSlideIndex="currentSlideIndex" current-category="tv" />
     </div>
   </template>
   
