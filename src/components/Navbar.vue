@@ -14,10 +14,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <router-link class="nav-link" style="color: white;" to="/catalogo?type=film">Film</router-link>
+          <router-link class="nav-link" to="/catalogo?type=film">Film</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" style="color: white;" to="/catalogo?type=tv">Serie-TV</router-link>
+          <router-link class="nav-link" to="/catalogo?type=tv">Serie-TV</router-link>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
