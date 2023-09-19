@@ -2,7 +2,7 @@
     <div class="container">
         <h1 class="saluto">Ciao {{ nome }}!</h1>
         <h2 class="presentazione">Scegli i tuoi generi preferiti:</h2>
-        <div class="row align-items-start justify-content-center">
+        <div style="margin-left: 12%;" class="row align-items-start justify-content-center">
             <div style="margin-top: 3%;" v-for="genere in generi" :key="genere" class="col-md-3">
                 <div class="form-check">
                     <input style="zoom: 1.5;" class="form-check-input" type="checkbox" :value="genere"
