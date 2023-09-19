@@ -3,12 +3,11 @@
         <h1 class="saluto">Ciao {{ nome }}!</h1>
         <h2 class="presentazione">Scegli i tuoi generi preferiti:</h2>
         <div class="row align-items-start justify-content-center">
-            <div style="display: inline-block; margin-top: 3%;" v-for="genere in generi" :key="genere" class="col-md-3">
+            <div style="margin-top: 3%;" v-for="genere in generi" :key="genere" class="col-md-3">
                 <div class="form-check">
                     <input style="zoom: 1.5;" class="form-check-input" type="checkbox" :value="genere"
                         v-model="generiSelezionati">
-                    <label style="color: white; font-size: 1.2em;" class="form-check-label"
-                        v-bind:for="'checkbox_' + genere">
+                    <label style="color: white; font-size: 1.2em;" :for="'checkbox_' + genere">
                         {{ genere }}
                     </label>
                 </div>
@@ -21,23 +20,37 @@
 </template>
   
 <script>
-import { mapState, mapActions } from 'vuex';
-
 export default {
-    computed: {
-        ...mapState(['generiSelezionati', 'nome']),
-        generi() {
-            return [
+    data() {
+        return {
+            generiSelezionati: [],
+            nome: '',
+            generi: [
                 'Azione', 'Commedia', 'Drammatico', 'Fantasy', 'Horror',
                 'Romantico', 'Science Fiction', 'Thriller', 'Animazione', 'Documentario'
-            ];
-        }
+            ]
+        };
     },
     methods: {
-        ...mapActions(['saveGeneri']),
+        salvaGeneri(generi) {
+            this.$store.commit('setGeneriSelezionati', generi);
+        },
         salvaInformazioni() {
-            this.saveGeneri(this.generiSelezionati);
-            this.$router.push('/catalogo/film')
+            this.salvaGeneri(this.generiSelezionati);
+            this.$router.push('/catalogo/film');
+        }
+    },
+    computed: {
+        nome() {
+            return this.$store.state.nome_registrazione;
+        },
+        generiSelezionati: {
+            get() {
+                return this.$store.state.generiSelezionati;
+            },
+            set(val) {
+                this.$store.commit('setGeneriSelezionati', val);
+            }
         }
     }
 };
