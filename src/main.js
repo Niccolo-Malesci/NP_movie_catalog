@@ -62,13 +62,10 @@ let store = createStore({
     setNome(state, nome) {
       state.nome_registrazione = nome;
     },
-    setGeneriSelezionati(state, generi) {
-      state.generiSelezionati = generi;
-    }
   },
   actions: {
-    saveGeneri({ commit }, generi) {
-      commit('setGeneriSelezionati', generi);
+    saveGeneri({ state }, generi) {
+      state.generiSelezionati = generi;
     }
   }
 })
