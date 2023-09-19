@@ -18,11 +18,10 @@
                 <div :class="['carousel-item', index === currentSlideIndex ? 'active' : '']"
                     v-for="(recommended, index) in chunkedRecommendedMedia" :key="index">
                     <div class="row" style="width: 95%;">
-                        <router-link :to="'/dettaglio/' + currentCategory + '/' + recommended.id"
-                            v-for="(media, mediaIndex) in recommended" :key="mediaIndex" class="col-md-2"
-                            @click="fetchMediaDetails(media.id, currentCategory)">
+                        <a :href="'/dettaglio/' + currentCategory + '/' + media.id"
+                            v-for="(media, mediaIndex) in recommended" :key="mediaIndex" class="col-md-2">
                             <img :src="getMediaPosterUrl(media.poster_path)" class="d-block w-100" alt="Media Consigliato">
-                        </router-link>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -63,12 +62,15 @@ export default {
             }
             return chunkedArray;
         },
-        getMediaPosterUrl(media) {
-            if (!media || !media.poster_path) {
+        getMediaPosterUrl(posterPath) {
+            if (!posterPath) {
                 return '';
             }
-            return `https://image.tmdb.org/t/p/original/${media.poster_path}`;
+            return `https://image.tmdb.org/t/p/original/${posterPath}`;
         },
+        /*redirectToDetail(mediaId, category) {
+            this.$router.push(`/dettaglio/${category}/${mediaId}`);
+        },*/
     },
 };
 </script>
