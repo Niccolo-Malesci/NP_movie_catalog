@@ -14,12 +14,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <button @click="linkFilm" :style="{ color: currentCategory === 'film' ? 'red' : 'white' }"
-            class="nav-link">Film</button>
+          <button @click="linkFilm"
+            :class="{ red: currentRoute === '/catalogo/film', white: currentRoute !== '/catalogo/film' }"
+            class="nav-link white">Film</button>
         </li>
         <li class="nav-item">
-          <button @click="linkTv" :style="{ color: currentCategory === 'tv' ? 'red' : 'white' }" class="nav-link"
-            to="/catalogo?type=tv">Serie-TV</button>
+          <button @click="linkTv"
+            :class="{ red: currentRoute === '/catalogo/tv', white: currentRoute !== '/catalogo/tv' }"
+            class="nav-link">Serie-TV</button>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -44,17 +46,19 @@ export default {
     return {
       currentLanguage: 'it',
       searchQuery: '',
-      currentCategory: 'film',
     };
+  },
+  computed: {
+    currentRoute() {
+      return this.$route.path;
+    }
   },
   methods: {
     linkFilm() {
       this.$router.push('/catalogo/film');
-      this.currentCategory = 'film'
     },
     linkTv() {
       this.$router.push('/catalogo/tv');
-      this.currentCategory = 'tv'
     },
     toggleLanguage() {
       this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
@@ -78,6 +82,14 @@ export default {
 </script>
   
 <style scoped>
+button.white {
+  color: white;
+}
+
+button.red {
+  color: red;
+}
+
 .navbar {
   position: fixed;
   top: 0;
