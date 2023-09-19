@@ -10,7 +10,6 @@ import Navbar from './components/Navbar.vue';
 
 export default {
   components: {
-    Navbar,
   },
 }
   </script>
@@ -21,4 +20,3 @@ export default {
     background-color: black;
   }
 </style>
-  

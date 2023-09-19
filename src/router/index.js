@@ -5,10 +5,16 @@ import Registrazione from '../views/Registrazione.vue';
 import MovieDetail from '../views/MovieDetail.vue';
 import TvShowDetail from '../views/TvShowDetail.vue';
 import CatalogoFilm from '../views/CatalogoFilm.vue';
+import Homepage from '../views/HomePage.vue';
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: '/homepage',
+      name: 'homepage',
+      component: Homepage,
+    },
     {
       path: '/',
       name: 'accesso',

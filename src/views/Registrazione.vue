@@ -99,6 +99,7 @@ export default {
       }
       this.$store.commit('setEmail', this.email_registrazione);
       this.$store.commit('setPassword', this.password_registrazione);
+      this.$store.commit('setNome', this.nome_registrazione);
       alert('Registrazione avvenuta con successo!')
       this.$router.push('/')
     },

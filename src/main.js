@@ -5,10 +5,6 @@ import { createI18n } from 'vue-i18n';
 import Carousel from 'vue-carousel';
 import { createStore } from 'vuex';
 
-const app = createApp(App);
-
-app.use(router);
-
 const i18n = createI18n({
   locale: 'it',
   messages: {
@@ -53,6 +49,7 @@ let store = createStore({
   state: {
     email_registrazione: '',
     password_registrazione: '',
+    nome_registrazione: '',
   },
   mutations: {
     setEmail(state, email) {
@@ -61,13 +58,17 @@ let store = createStore({
     setPassword(state, password) {
       state.password_registrazione = password;
     },
+    setNome(state, nome) {
+      state.nome_registrazione = nome;
+    }
   },
 })
 
-app.use(i18n);
+const app = createApp(App);
 
+app.use(store);
+app.use(i18n);
+app.use(router);
 app.use(Carousel);
 
 app.mount('#app');
-
-app.use(store);

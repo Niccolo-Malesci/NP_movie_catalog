@@ -49,7 +49,7 @@ export default {
         alert('Account non esistente')
         return false
       }
-      this.$router.push('/catalogo/film')
+      this.$router.push('/homepage')
     },
   }
 };
