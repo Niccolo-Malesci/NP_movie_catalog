@@ -50,6 +50,7 @@ let store = createStore({
     email_registrazione: '',
     password_registrazione: '',
     nome_registrazione: '',
+    generiSelezionati: []
   },
   mutations: {
     setEmail(state, email) {
@@ -60,8 +61,16 @@ let store = createStore({
     },
     setNome(state, nome) {
       state.nome_registrazione = nome;
+    },
+    setGeneriSelezionati(state, generi) {
+      state.generiSelezionati = generi;
     }
   },
+  actions: {
+    saveGeneri({ commit }, generi) {
+      commit('setGeneriSelezionati', generi);
+    }
+  }
 })
 
 const app = createApp(App);

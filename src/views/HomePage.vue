@@ -5,27 +5,27 @@
         <div class="row align-items-start justify-content-center">
             <div style="display: inline-block; margin-top: 3%;" v-for="genere in generi" :key="genere" class="col-md-3">
                 <div class="form-check">
-                    <input style="zoom: 1.5;" class="form-check-input" type="checkbox" :value="genere" v-model="generiSelezionati">
-                    <label style="color: white; font-size: 1.2em;" class="form-check-label" v-bind:for="'checkbox_' + genere">
+                    <input style="zoom: 1.5;" class="form-check-input" type="checkbox" :value="genere"
+                        v-model="generiSelezionati">
+                    <label style="color: white; font-size: 1.2em;" class="form-check-label"
+                        v-bind:for="'checkbox_' + genere">
                         {{ genere }}
                     </label>
                 </div>
             </div>
         </div>
+        <div style="text-align: center;">
+            <button style="margin-top: 4%;" @click="salvaInformazioni">Continua</button>
+        </div>
     </div>
 </template>
   
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
-    data() {
-        return {
-            generiSelezionati: [],
-        };
-    },
     computed: {
-        nome() {
-            return this.$store.state.nome_registrazione;
-        },
+        ...mapState(['generiSelezionati', 'nome']),
         generi() {
             return [
                 'Azione', 'Commedia', 'Drammatico', 'Fantasy', 'Horror',
@@ -33,7 +33,13 @@ export default {
             ];
         }
     },
-    methods: {},
+    methods: {
+        ...mapActions(['saveGeneri']),
+        salvaInformazioni() {
+            this.saveGeneri(this.generiSelezionati);
+            this.$router.push('/catalogo/film')
+        }
+    }
 };
 </script>
   
