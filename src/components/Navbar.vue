@@ -42,7 +42,7 @@ export default {
     return {
       currentLanguage: 'it',
       searchQuery: '',
-      currentCategory: 'movie',
+      currentCategory: 'film',
     };
   },
   methods: {
