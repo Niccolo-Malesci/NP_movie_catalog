@@ -3,7 +3,7 @@ import Accesso from '../views/Accesso.vue';
 import CatalogoTv from '../views/CatalogoTv.vue';
 import Registrazione from '../views/Registrazione.vue';
 import MovieDetail from '../views/MovieDetail.vue';
-import TvShowDetail from '../views/TvShowDetail.vue';
+import TvShowDetail from '../views/TVShowDetail.vue';
 import CatalogoFilm from '../views/CatalogoFilm.vue';
 import Homepage from '../views/HomePage.vue';
 
