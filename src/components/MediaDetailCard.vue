@@ -18,7 +18,7 @@
                         getCountries(media.production_countries) }}</p>
                     <p style="font-style: italic;">{{ $t('mediaDetails.productionCompanies') }}: {{
                         getCompanies(media.production_companies) }}</p>
-                    Valutazione:
+                    {{ $t('mediaDetails.rating') }}:
                     <p v-if="(media.vote_average / 2) <= 0.25">
                         <i class="bi bi-star" style="color: yellow;"></i>
                         <i class="bi bi-star" style="color: yellow;"></i>
@@ -89,16 +89,17 @@
                         <i class="bi bi-star-fill" style="color: yellow;"></i>
                         <i class="bi bi-star-fill" style="color: yellow;"></i>
                     </p>
-                    <p>Popolarità: {{ media.popularity }}</p>
+                    <p>{{ $t('mediaDetails.popularity') }}: {{ media.popularity }}</p>
                     <p style="font-weight: bold;">{{ getGenres(media.genres) }}</p>
                     <p v-if="media.title" class="card-text"
                         style="color: white; position: absolute; bottom: 0; right: 0; margin: 10px;">
-                        Durata: {{ media.runtime }} minuti <br> {{ $t('mediaDetails.dateOfPublication') }}: {{
-                            media.release_date }}
+                        {{ $t('mediaDetails.duration') }}: {{ media.runtime }} {{ $t('mediaDetails.minuts') }} <br> {{
+                            $t('mediaDetails.dateOfPublication') }}: {{
+        media.release_date }}
                     </p>
                     <p v-else class="card-text"
                         style="color: white; position: absolute; bottom: 0; right: 0; margin: 10px;">
-                        Numero totale di episodi: {{ media.number_of_episodes }} <br> {{
+                        {{ $t('mediaDetails.totalNumberOfEpisodes') }}: {{ media.number_of_episodes }} <br> {{
                             $t('mediaDetails.dateOfPublication') }}: {{ media.first_air_date }}
                     </p>
                 </div>
