@@ -22,8 +22,12 @@ const i18n = createI18n({
         productionCompanies: "Case di produzione",
         popularity: "Popolarità",
         genres: "Generi",
+        rating: 'Votazione',
+        popularity: 'Popolarità',
         duration: "Durata",
-        dateOfPublication: "Data di pubblicazione"
+        minuts: 'minuti',
+        totalNumberOfEpisodes: 'Numero totale di episodi',
+        dateOfPublication: "Data di pubblicazione",
       }
     },
     en: {
@@ -40,8 +44,12 @@ const i18n = createI18n({
         productionCompanies: "Production Companies",
         popularity: "Popularity",
         genres: "Genres",
+        rating: 'Rating',
+        popularity: 'Popularity',
         duration: "Duration",
-        dateOfPublication: "Date of publication"
+        minuts: 'minutes',
+        totalNumberOfEpisodes: 'Total number of episodes',
+        dateOfPublication: "Date of publication",
       }
     },
   },
