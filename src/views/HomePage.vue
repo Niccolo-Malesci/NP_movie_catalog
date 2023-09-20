@@ -32,11 +32,8 @@ export default {
         };
     },
     methods: {
-        salvaGeneri(generi) {
-            this.$store.commit('setGeneriSelezionati', generi);
-        },
         salvaInformazioni() {
-            this.salvaGeneri(this.generiSelezionati);
+            this.$store.commit('setGeneriSelezionati', this.generiSelezionati);
             this.$router.push('/catalogo/film');
         }
     },
@@ -44,14 +41,6 @@ export default {
         nome() {
             return this.$store.state.nome_registrazione;
         },
-        generiSelezionati: {
-            get() {
-                return this.$store.state.generiSelezionati;
-            },
-            set(val) {
-                this.$store.commit('setGeneriSelezionati', val);
-            }
-        }
     }
 };
 </script>
