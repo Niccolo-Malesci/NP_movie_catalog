@@ -13,6 +13,7 @@ const i18n = createI18n({
       appTitle: 'NP Catalogo Film',
       showMore: 'Mostra altro',
       showLess: 'Mostra meno',
+      language: 'Lingua',
       mediaDetails: {
         title: "Titolo",
         tagline: "Slogan",
@@ -30,6 +31,7 @@ const i18n = createI18n({
       appTitle: "NP's Movie Catalog",
       showMore: 'Show more',
       showLess: 'Show less',
+      language: 'Language',
       mediaDetails: {
         title: "Title",
         tagline: "Tagline",

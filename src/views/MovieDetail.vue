@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <Navbar @language-change="changeLanguage" />
+        <Navbar @language-change="toggleLanguage" />
         <MediaDetailCard :media="movie" />
         <MediaCarousel :chunkedRecommendedMedia="chunkedRecommendedMovies" :currentSlideIndex="currentSlideIndex"
             currentCategory="movie" />
@@ -69,6 +69,11 @@ export default {
                 chunkedArray.push(array.slice(i, i + size));
             }
             return chunkedArray;
+        },
+        toggleLanguage() {
+            this.language = this.language === 'en' ? 'it' : 'en';
+            this.fetchGetMovie();
+            this.$i18n.locale = this.language;
         },
     },
     components: { Navbar, MediaDetailCard, MediaCarousel },

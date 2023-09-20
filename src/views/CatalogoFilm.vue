@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-      <Navbar @search="performSearch" @language-change="changeLanguage" />
+      <Navbar @search="performSearch" @language-change="toggleLanguage" />
       <div id="movie-list" v-if="movies.length" class="movie-list">
         <div v-for="movie in movies" :key="movie.id" class="movie-item">
           <div class="card">
