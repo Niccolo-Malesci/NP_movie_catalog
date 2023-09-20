@@ -25,9 +25,9 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-            style="color: white;">Lingua</a>
+            style="color: white;"> {{ $t('language') }}</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"><button @click="toggleLanguage">{{ currentLanguage === 'it' ?
+            <li style="display: inline-block;" margin-right ><a class="dropdown-item" href="#"><button @click="toggleLanguage">{{ currentLanguage === 'it' ?
               'English' : 'Italian' }}</button></a></li>
           </ul>
         </li>
