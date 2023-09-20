@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <Navbar @search="performSearch" @language-change="toggleLanguage" />
+    <Navbar @search="performSearch" @language-change="changeLanguage" />
     <div id="movie-list" v-if="movies.length" class="movie-list">
       <div v-for="movie in movies" :key="movie.id" class="movie-item">
         <div class="card">
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <ul class="pagination justify-content-center" style="margin-top: 1%;">
+    <ul v-if="showPagination" class="pagination justify-content-center" style="margin-top: 1%;">
       <li class="page-item">
         <a @click="fetchPrevMovies" v-if="currentPage > 1" class="page-link">Pagina precedente</a>
       </li>
@@ -57,6 +57,7 @@ export default {
       currentLanguage: 'it',
       searchQuery: '',
       currentCategory: 'movie',
+      showPagination: true
     };
   },
   mounted() {
@@ -165,6 +166,7 @@ export default {
       this.searchQuery = query;
       this.currentPage = 1;
       this.fetchMovies();
+      this.showPagination = false
     },
     changeLanguage(newLanguage) {
       this.currentLanguage = newLanguage;
