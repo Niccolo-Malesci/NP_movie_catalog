@@ -44,7 +44,7 @@
 export default {
   data() {
     return {
-      currentLanguage: 'it',
+      currentLanguage: this.$store.state.currentLanguage,
       searchQuery: '',
     };
   },
