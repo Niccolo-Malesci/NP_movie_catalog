@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <Navbar @language-change="toggleLanguage" />
+        <Navbar @language-change="toggleLanguage" :currentLanguage="language" />
         <MediaDetailCard :media="movie" />
         <MediaCarousel :chunkedRecommendedMedia="chunkedRecommendedMovies" :currentSlideIndex="currentSlideIndex"
             currentCategory="movie" />
