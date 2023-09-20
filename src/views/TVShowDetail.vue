@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <Navbar @language-change="toggleLanguage" :currentLanguage="language" />
+        <Navbar @language-change="toggleLanguage" :currentLanguage="this.$store.state.currentLanguage" />
         <MediaDetailCard :media="tvShow" />
         <MediaCarousel :chunkedRecommendedMedia="chunkedRecommendedTvShows" :currentSlideIndex="currentSlideIndex"
             currentCategory="tv" />
@@ -16,7 +16,6 @@ export default {
     data() {
         return {
             apiKey: import.meta.env.VITE_API_KEY,
-            language: 'it',
             tvShow: {},
             recommendedTvShows: [],
             chunkedRecommendedTvShows: [],
@@ -45,8 +44,8 @@ export default {
     methods: {
         async fetchGetTvShow() {
             const tvShowId = this.$route.params.id;
-            const tvShowUrl = `https://api.themoviedb.org/3/tv/${tvShowId}?api_key=${this.apiKey}&language=${this.language}`;
-            const recommendedTvShowsUrl = `https://api.themoviedb.org/3/tv/${tvShowId}/recommendations?api_key=${this.apiKey}&language=${this.language}`;
+            const tvShowUrl = `https://api.themoviedb.org/3/tv/${tvShowId}?api_key=${this.apiKey}&language=${this.$store.state.currentLanguage}`;
+            const recommendedTvShowsUrl = `https://api.themoviedb.org/3/tv/${tvShowId}/recommendations?api_key=${this.apiKey}&language=${this.$store.state.currentLanguage}`;
 
             fetch(tvShowUrl)
                 .then(response => response.json())
@@ -72,9 +71,14 @@ export default {
             return chunkedArray;
         },
         toggleLanguage() {
-            this.language = this.language === 'en' ? 'it' : 'en';
+            if (this.$store.state.currentLanguage == 'en') {
+                this.$store.commit('setCurrentLanguage', 'it');
+            }
+            else {
+                this.$store.commit('setCurrentLanguage', 'en');
+            }
             this.fetchGetTvShow();
-            this.$i18n.locale = this.language;
+            this.$i18n.locale = this.$store.state.currentLanguage;
         },
     },
     components: { Navbar, MediaDetailCard, MediaCarousel },
@@ -86,4 +90,3 @@ export default {
     margin-top: 87px;
 }
 </style>
-  

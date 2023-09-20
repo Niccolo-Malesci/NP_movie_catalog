@@ -114,10 +114,10 @@ export default {
       }
     },
     toggleLanguage() {
-      if (this.$store.state.currentLanguage=='en') {
+      if (this.$store.state.currentLanguage == 'en') {
         this.$store.commit('setCurrentLanguage', 'it');
       }
-      else{
+      else {
         this.$store.commit('setCurrentLanguage', 'en');
       }
       this.fetchMovies();
