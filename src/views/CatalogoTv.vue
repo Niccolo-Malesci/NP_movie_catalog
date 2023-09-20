@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <ul v-if="showPagination" class="pagination justify-content-center" style="margin-top: 1%;">
+    <ul v-if="pagination" class="pagination justify-content-center" style="margin-top: 1%;">
       <li class="page-item">
         <a @click="fetchPrevMovies" v-if="currentPage > 1" class="page-link">Pagina precedente</a>
       </li>
@@ -57,7 +57,7 @@ export default {
       currentLanguage: 'it',
       searchQuery: '',
       currentCategory: 'movie',
-      showPagination: true
+      pagination: true,
     };
   },
   mounted() {
@@ -166,7 +166,7 @@ export default {
       this.searchQuery = query;
       this.currentPage = 1;
       this.fetchMovies();
-      this.showPagination = false
+      this.pagination = false;
     },
     changeLanguage(newLanguage) {
       this.currentLanguage = newLanguage;
