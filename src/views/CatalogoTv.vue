@@ -26,7 +26,7 @@
     </div>
     <ul v-if="this.searchQuery.length === 0" class="pagination justify-content-center" style="margin-top: 1%;">
       <li class="page-item">
-        <a @click="fetchPrevMovies" v-if="currentPage > 1" class="page-link">Pagina precedente</a>
+        <a @click="fetchPrevMovies" v-if="currentPage > 1" class="page-link">{{ $t('prevPage') }}</a>
       </li>
       <li v-if="currentPage != 1" class="page-item"><a class="page-link" href="#" @click="goToPage(1)">1</a></li>
       <li class="page-item"><a class="page-link" href="#" v-if="currentPage > 2" @click="goToPage(currentPage - 1)">{{
@@ -38,7 +38,7 @@
           @click="goToPage(totalPages)">{{
             totalPages }}</a></li>
       <li class="page-item">
-        <a @click="fetchNextMovies" v-if="currentPage < totalPages" class="page-link" href="#">Pagina successiva</a>
+        <a @click="fetchNextMovies" v-if="currentPage < totalPages" class="page-link" href="#">{{ $t('nextPage') }}</a>
       </li>
     </ul>
   </div>
@@ -54,7 +54,6 @@ export default {
       movies: [],
       currentPage: 1,
       totalPages: 1,
-      currentLanguage: 'it',
       searchQuery: '',
       currentCategory: 'movie',
     };
@@ -77,7 +76,7 @@ export default {
     },
     fetchMovies() {
       const apiKey = import.meta.env.VITE_API_KEY;
-      const language = this.currentLanguage;
+      const language = this.$store.state.currentLanguage;
       const page = this.currentPage;
       const query = this.searchQuery;
       let url = `https://api.themoviedb.org/3/trending/tv/week?page=${page}&api_key=${apiKey}&language=${language}`;
@@ -92,7 +91,7 @@ export default {
           this.movies = response.data.results.map((movie) => {
             return {
               ...movie,
-              overview: this.getTranslatedOverview(movie.overview, this.currentLanguage),
+              overview: this.getTranslatedOverview(movie.overview),
             };
           });
         })
@@ -121,9 +120,14 @@ export default {
       }
     },
     toggleLanguage() {
-      this.currentLanguage = this.currentLanguage === 'en' ? 'it' : 'en';
+      if (this.$store.state.currentLanguage=='en') {
+        this.$store.commit('setCurrentLanguage', 'it');
+      }
+      else{
+        this.$store.commit('setCurrentLanguage', 'en');
+      }
       this.fetchMovies();
-      this.$i18n.locale = this.currentLanguage;
+      this.$i18n.locale = this.$store.state.currentLanguage;
     },
     getMoviePosterUrl(posterPath) {
       if (!posterPath) {
@@ -131,7 +135,7 @@ export default {
       }
       return `https://image.tmdb.org/t/p/w500/${posterPath}`;
     },
-    getTranslatedOverview(overview, language) {
+    getTranslatedOverview(overview) {
       return overview;
     },
     shouldShowExpandButton(movie) {
@@ -167,7 +171,7 @@ export default {
       this.fetchMovies();
     },
     changeLanguage(newLanguage) {
-      this.currentLanguage = newLanguage;
+      this.$store.commit('setCurrentLanguage', newLanguage);
       this.fetchMovies();
     },
   },

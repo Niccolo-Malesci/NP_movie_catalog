@@ -13,6 +13,8 @@ const i18n = createI18n({
       appTitle: 'NP Catalogo Film',
       showMore: 'Mostra altro',
       showLess: 'Mostra meno',
+      nextPage: 'Pagina successiva',
+      prevPage: 'Pagina precedente',
       language: 'Lingua',
       mediaDetails: {
         title: "Titolo",
@@ -35,6 +37,8 @@ const i18n = createI18n({
       appTitle: "NP's Movie Catalog",
       showMore: 'Show more',
       showLess: 'Show less',
+      nextPage: 'Next page',
+      prevPage: 'Previous page',
       language: 'Language',
       mediaDetails: {
         title: "Title",
@@ -60,7 +64,8 @@ let store = createStore({
     email_registrazione: '',
     password_registrazione: '',
     nome_registrazione: '',
-    generiSelezionati: []
+    generiSelezionati: [],
+    currentLanguage: 'it'
   },
   mutations: {
     setEmail(state, email) {
@@ -71,6 +76,9 @@ let store = createStore({
     },
     setNome(state, nome) {
       state.nome_registrazione = nome;
+    },
+    setCurrentLanguage(state, language) {
+      state.currentLanguage = language;
     },
   },
   actions: {
