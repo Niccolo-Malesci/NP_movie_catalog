@@ -50,10 +50,10 @@ const i18n = createI18n({
         genres: "Genres",
         rating: 'Rating',
         popularity: 'Popularity',
-        duration: "Duration",
+        duration: "Running time",
         minuts: 'minutes',
         totalNumberOfEpisodes: 'Total number of episodes',
-        dateOfPublication: "Date of publication",
+        dateOfPublication: "Publication date",
       }
     },
   },
