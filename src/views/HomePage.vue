@@ -17,7 +17,7 @@
             <button style="margin-top: 4%;" @click="salvaInformazioni">{{ $t('continueButton') }}</button>
             <select v-model="linguaSelezionata" @change="cambiaLingua">
                 <option value="it">Italiano</option>
-                <option value="en">Inglese</option>
+                <option value="en">English</option>
             </select>
         </div>
     </div>
@@ -44,6 +44,7 @@ export default {
         cambiaLingua() {
             if (this.$store.state.currentLanguage == 'en') {
                 this.$store.commit('setCurrentLanguage', 'it');
+                window.location.reload();
             }
             else {
                 this.$store.commit('setCurrentLanguage', 'en');
