@@ -79,7 +79,6 @@ export default {
 <style scoped>
 .carousel-container {
     max-width: 70%;
-    max-height: 500px;
     margin: 0 auto;
     overflow: hidden;
 }
@@ -92,6 +91,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     transition: transform 0.5s ease;
+    overflow: hidden;
 }
 
 .carousel-item {
@@ -101,6 +101,7 @@ export default {
 .carousel-item img {
     width: 100%;
     max-height: 250px;
+    height: auto;
 }
 
 .carousel-control-prev,
@@ -120,4 +121,5 @@ export default {
     margin-bottom: -10px;
 }
 </style>
+
   
