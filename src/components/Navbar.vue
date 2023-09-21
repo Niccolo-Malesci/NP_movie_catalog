@@ -7,7 +7,7 @@
         {{ $t('appTitle') }}
       </router-link>
     </div>
-    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
       data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -38,11 +38,11 @@
           </ul>
         </li>
       </ul>
+      <form class="d-flex" role="search">
+        <input v-model="searchQuery" @input="handleSearchInput" :placeholder="$t('searchPlaceholder')"
+          class="search-input" />
+      </form>
     </div>
-    <form class="d-flex" role="search">
-      <input v-model="searchQuery" @input="handleSearchInput" :placeholder="$t('searchPlaceholder')"
-        class="search-input" />
-    </form>
   </nav>
 </template>
 
@@ -81,7 +81,7 @@ export default {
       }
     },
     goToHomePage() {
-      this.$router.push({ path: '/catalogo/film' });
+      this.$router.push({ path: '/homepage' });
     },
   },
 };
@@ -147,6 +147,10 @@ button.active {
 
 .language-button {
   color: white;
+}
+.navbar-toggler {
+  background-color: white;
+  border: none;
 }
 
 .dropdown-menu {
