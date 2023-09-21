@@ -3,7 +3,26 @@
     <Navbar @search="performSearch" @language-change="toggleLanguage" />
     <div id="movie-list" v-if="movies.length" class="movie-list">
       <div v-for="movie in movies" :key="movie.id" class="movie-item">
-        <div class="card">
+        <div class="card" v-if="ricercaGenere(movie.genre.name) == false">
+          <router-link :to="{ name: 'movie-detail', params: { id: movie.id } }">
+            <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
+          </router-link>
+          <div class="card-body" style="min-height: 185px;">
+            <h5 v-if="movie.title" class="card-title">{{ movie.title }}</h5>
+            <h5 v-else class="card-title">{{ movie.name }}</h5>
+            <p class="card-text" v-if="!movie.expandedDescription">
+              {{ truncateDescription(movie.overview) }}
+              <a v-if="shouldShowExpandButton(movie)" @click="toggleDescription(movie)" class="expand-button">
+                {{ $t('showMore') }}
+              </a>
+            </p>
+            <p class="card-text" v-else>
+              {{ movie.overview }}
+              <a @click="toggleDescription(movie)" class="expand-button"> {{ $t('showLess') }} </a>
+            </p>
+          </div>
+        </div>
+        <div class="card selezionato" v-else>
           <router-link :to="{ name: 'movie-detail', params: { id: movie.id } }">
             <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
           </router-link>
@@ -61,6 +80,16 @@ export default {
     this.fetchMovies();
   },
   methods: {
+    ricercaGenere(g) {
+      for (let i = 0; i < this.$store.state.genere.length; i++) {
+        for (let j = 0; j < g.length; j++) {
+          if (this.$store.state.genere[i] == g.name[j]) {
+            return true
+          }
+        }
+      }
+      return false
+    },
     goToPage(page) {
       if (page >= 1 && page <= this.totalPages) {
         this.currentPage = page;
@@ -174,6 +203,9 @@ export default {
 </script>
   
 <style scoped>
+.selezionato{
+  border: 2px solid yellow;
+}
 .page-link {
   color: black;
   border: 1px solid red;

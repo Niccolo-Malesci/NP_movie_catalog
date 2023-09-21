@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         salvaInformazioni() {
-            this.$store.commit('setGeneriSelezionati', this.generiSelezionati); 
+            this.$store.commit('setGeneriSelezionati', this.generiSelezionati);
             this.$router.push('/catalogo/film');
         },
         cambiaLingua() {

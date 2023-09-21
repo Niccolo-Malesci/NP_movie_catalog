@@ -94,8 +94,8 @@ let store = createStore({
     email_registrazione: '',
     password_registrazione: '',
     nome_registrazione: '',
-    generiSelezionati: [],
-    currentLanguage: 'it'
+    currentLanguage: 'it',
+    genere: []
   },
   mutations: {
     setEmail(state, email) {
@@ -110,12 +110,10 @@ let store = createStore({
     setCurrentLanguage(state, language) {
       state.currentLanguage = language;
     },
-  },
-  actions: {
-    saveGeneri({ state }, generi) {
-      state.generiSelezionati = generi;
+    setGenres(state, genre) {
+      state.genere = genre
     }
-  }
+  },
 })
 
 const app = createApp(App);
