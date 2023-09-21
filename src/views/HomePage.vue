@@ -30,12 +30,12 @@ export default {
     data() {
         return {
             generiSelezionati: [],
-            nome: '',
+            nome: this.$store.state.nome_registrazione,
             generi: [
                 'azione', 'animazione', 'avventura', 'commedia', 'crime', 'documentario', 'dramma', 'famiglia',
                 'fantascienza', 'fantasy', 'guerra', 'horror', 'mistero', 'romance', 'storia', 'thriller'
             ],
-            linguaSelezionata: 'it',
+            linguaSelezionata: this.$store.state.currentLanguage,
         };
     },
     methods: {
@@ -44,12 +44,13 @@ export default {
             this.$router.push('/catalogo/film');
         },
         cambiaLingua() {
+            if (this.$store.state.currentLanguage == 'en') {
+                this.$store.commit('setCurrentLanguage', 'it');
+            }
+            else {
+                this.$store.commit('setCurrentLanguage', 'en');
+            }
             this.$i18n.locale = this.linguaSelezionata;
-        },
-        computed: {
-            nome() {
-                return this.$store.state.nome_registrazione;
-            },
         },
     },
 };
