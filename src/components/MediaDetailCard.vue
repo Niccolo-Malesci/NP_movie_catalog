@@ -90,7 +90,10 @@
                         <i class="bi bi-star-fill" style="color: yellow;"></i>
                     </p>
                     <p>{{ $t('mediaDetails.popularity') }}: {{ media.popularity }}</p>
-                    <p style="font-weight: bold;">{{ getGenres(media.genres) }}</p>
+                    <p v-if="!ricercaGenere(media.genres.map(genere => genere.name))" style="font-weight: bold;">{{
+                        getGenres(media.genres) }}</p>
+                    <p v-else style="font-weight: bold;">{{
+                        getGenres(media.genres) }}</p>
                     <p v-if="media.title" class="card-text"
                         style="color: white; position: absolute; bottom: 0; right: 0; margin: 10px;">
                         {{ $t('mediaDetails.duration') }}: {{ media.runtime }} {{ $t('mediaDetails.minuts') }} <br> {{
@@ -114,6 +117,18 @@ export default {
         media: Object,
     },
     methods: {
+        ricercaGenere(g) {
+            const generi = this.$store.state.genere;
+
+            for (let i = 0; i < generi.length; i++) {
+                for (let j = 0; j < g.length; j++) {
+                    if (g[j] == generi[i]) {
+                        return true
+                    }
+                }
+            }
+            return false
+        },
         getMediaPosterUrl(posterPath) {
             if (!posterPath) {
                 return '';
