@@ -92,7 +92,7 @@
                     <p>{{ $t('mediaDetails.popularity') }}: {{ media.popularity }}</p>
                     <p v-if="!ricercaGenere(media.genres.map(genere => genere.name))" style="font-weight: bold;">{{
                         getGenres(media.genres) }}</p>
-                    <p v-else style="font-weight: bold;">{{
+                    <p v-else style="color: yellow;">{{
                         getGenres(media.genres) }}</p>
                     <p v-if="media.title" class="card-text"
                         style="color: white; position: absolute; bottom: 0; right: 0; margin: 10px;">
@@ -117,17 +117,23 @@ export default {
         media: Object,
     },
     methods: {
+        pulisciGeneri(generi) {
+            return Object.values(generi);
+        },
         ricercaGenere(g) {
-            const generi = this.$store.state.genere;
+            const generiPuliti = this.pulisciGeneri(this.$store.state.genere);
 
-            for (let i = 0; i < generi.length; i++) {
-                for (let j = 0; j < g.length; j++) {
-                    if (g[j] == generi[i]) {
-                        return true
-                    }
+            console.log('Generi Puliti:', generiPuliti);
+            console.log('Generi del Media:', g);
+
+            for (let j = 0; j < g.length; j++) {
+                if (generiPuliti.includes(g[j])) {
+                    console.log('Match trovato:', g[j]);
+                    return true;
                 }
             }
-            return false
+            console.log('Nessun match trovato');
+            return false;
         },
         getMediaPosterUrl(posterPath) {
             if (!posterPath) {
