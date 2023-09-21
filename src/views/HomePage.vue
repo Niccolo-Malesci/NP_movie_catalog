@@ -14,13 +14,11 @@
             </div>
         </div>
         <div style="text-align: center;">
+            <button style="margin-top: 4%;" @click="salvaInformazioni">{{ $t('continueButton') }}</button>
             <select v-model="linguaSelezionata" @change="cambiaLingua">
                 <option value="it">Italiano</option>
                 <option value="en">Inglese</option>
             </select>
-        </div>
-        <div style="text-align: center;">
-            <button style="margin-top: 4%;" @click="salvaInformazioni">{{ $t('continueButton') }}</button>
         </div>
     </div>
 </template>

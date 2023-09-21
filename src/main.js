@@ -67,7 +67,7 @@ const messages = {
     dramma: 'Drama',
     fantasy: 'Fantasy',
     horror: 'Horror',
-    romance: 'romance',
+    romance: 'Romance',
     fantascienza: 'Science Fiction',
     thriller: 'Thriller',
     animazione: 'Animation',
