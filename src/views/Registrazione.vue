@@ -4,9 +4,9 @@
       <div class="mb-3">
         <h1
           style="text-align: center; margin-top: 2%; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
-          Registrati!</h1>
-        <h2 style="text-align: center; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Non
-          è mai stato così semplice:</h2>
+          {{ $t('signIn') }}!</h1>
+        <h2 style="text-align: center; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">{{
+          $t('slogan') }}</h2>
         <div class="input-container">
           <div style="justify-content: center; align-items: center; display: flex;">
             <div class="nome-g">
@@ -32,11 +32,15 @@
               maxlength="320">
           </div>
           <div class="nascita-g">
-            <p>Inserisci qui la tua data di nascita:</p>
+            <p>{{ $t('nascita') }}</p>
             <input type="date" id="birthday" class="nascita">
           </div>
           <div style="justify-content: center; align-items: center; display: flex; margin-top: 4%;">
-            <input type="submit" id="theButton" value="Registrati" class="button" @click="controllo">
+            <button type="submit" id="theButton" class="button" @click="controllo">{{ $t('signIn') }}</button>
+            <select v-model="linguaSelezionata" @change="cambiaLingua">
+              <option value="it">Italiano</option>
+              <option value="en">English</option>
+            </select>
           </div>
         </div>
       </div>
@@ -56,10 +60,20 @@ export default {
       email_registrazione: '',
       password_registrazione: '',
       data_registrazione: '',
-      passwordC_registrazione: ''
+      passwordC_registrazione: '',
+      linguaSelezionata: this.$store.state.currentLanguage,
     }
   },
   methods: {
+    cambiaLingua() {
+      if (this.$store.state.currentLanguage == 'en') {
+        this.$store.commit('setCurrentLanguage', 'it');
+      }
+      else {
+        this.$store.commit('setCurrentLanguage', 'en');
+      }
+      this.$i18n.locale = this.linguaSelezionata;
+    },
     controllo() {
       if (this.nome_registrazione == '') {
         alert('Nome mancante')
