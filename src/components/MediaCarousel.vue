@@ -78,7 +78,7 @@ export default {
   
 <style scoped>
 .carousel-container {
-    max-width: 100%;
+    max-width: 70%;
     margin: 0 auto;
     overflow: hidden;
 }
