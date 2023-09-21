@@ -55,25 +55,12 @@ export default {
       currentPage: 1,
       totalPages: 1,
       searchQuery: '',
-      selectedGenres: this.$store.state.genere,
     };
   },
   mounted() {
     this.fetchMovies();
   },
   methods: {
-    ricercaGenere(g) {
-      const generiSelezionati = this.$store.state.genere;
-
-      for (let i = 0; i < generiSelezionati.length; i++) {
-        for (let j = 0; j < g.length; j++) {
-          if (generiSelezionati[i] === g[j]) {
-            return true;
-          }
-        }
-      }
-      return false;
-    },
     goToPage(page) {
       if (page >= 1 && page <= this.totalPages) {
         this.currentPage = page;
