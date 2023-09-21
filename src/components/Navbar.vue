@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-dark navbar">
+  <nav class="navbar navbar-expand-md bg-dark navbar">
     <div class="container-fluid" style="width: max-content;">
       <router-link to="/catalogo/film" class="navbar-link"
         style="color: red; font-family: fantasy; font-size: xx-large; width: max-content; text-decoration: none;"
@@ -7,8 +7,9 @@
         {{ $t('appTitle') }}
       </router-link>
     </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -24,12 +25,16 @@
             class="nav-link">Serie-TV</button>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-            style="color: white;"> {{ $t('language') }}</a>
-          <ul class="dropdown-menu">
-            <li style="display: inline-block;"><a class="dropdown-item" href="#"><button @click="toggleLanguage">{{
-              currentLanguage === 'it' ?
-              'English' : 'Italian' }}</button></a></li>
+          <button class="nav-link dropdown-toggle btn-sm language-button" type="button" id="languageDropdown"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            {{ $t('language') }}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+            <li>
+              <a class="dropdown-item" href="#" @click="toggleLanguage">
+                {{ currentLanguage === 'it' ? 'English' : 'Italian' }}
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -138,6 +143,24 @@ button.active {
   background-color: #e50914;
   font-weight: bold;
   color: #fff;
+}
+
+.language-button {
+  color: white;
+}
+
+.dropdown-menu {
+  background-color: #343a40;
+  color: white;
+}
+
+.dropdown-menu a.dropdown-item {
+  color: white;
+}
+
+.dropdown-menu a.dropdown-item:hover {
+  background-color: #212529;
+  color: white;
 }
 </style>
   
