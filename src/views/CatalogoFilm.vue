@@ -3,26 +3,7 @@
     <Navbar @search="performSearch" @language-change="toggleLanguage" />
     <div id="movie-list" v-if="movies.length" class="movie-list">
       <div v-for="movie in movies" :key="movie.id" class="movie-item">
-        <div class="card" v-if="ricercaGenere(movie.genre.name) == false">
-          <router-link :to="{ name: 'movie-detail', params: { id: movie.id } }">
-            <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
-          </router-link>
-          <div class="card-body" style="min-height: 185px;">
-            <h5 v-if="movie.title" class="card-title">{{ movie.title }}</h5>
-            <h5 v-else class="card-title">{{ movie.name }}</h5>
-            <p class="card-text" v-if="!movie.expandedDescription">
-              {{ truncateDescription(movie.overview) }}
-              <a v-if="shouldShowExpandButton(movie)" @click="toggleDescription(movie)" class="expand-button">
-                {{ $t('showMore') }}
-              </a>
-            </p>
-            <p class="card-text" v-else>
-              {{ movie.overview }}
-              <a @click="toggleDescription(movie)" class="expand-button"> {{ $t('showLess') }} </a>
-            </p>
-          </div>
-        </div>
-        <div class="card selezionato" v-else>
+        <div class="card">
           <router-link :to="{ name: 'movie-detail', params: { id: movie.id } }">
             <img :src="getMoviePosterUrl(movie.poster_path)" alt="Locandina del film" class="card-img-top">
           </router-link>
@@ -74,6 +55,7 @@ export default {
       currentPage: 1,
       totalPages: 1,
       searchQuery: '',
+      selectedGenres: this.$store.state.genere,
     };
   },
   mounted() {
@@ -81,14 +63,16 @@ export default {
   },
   methods: {
     ricercaGenere(g) {
-      for (let i = 0; i < this.$store.state.genere.length; i++) {
+      const generiSelezionati = this.$store.state.genere;
+
+      for (let i = 0; i < generiSelezionati.length; i++) {
         for (let j = 0; j < g.length; j++) {
-          if (this.$store.state.genere[i] == g.name[j]) {
-            return true
+          if (generiSelezionati[i] === g[j]) {
+            return true;
           }
         }
       }
-      return false
+      return false;
     },
     goToPage(page) {
       if (page >= 1 && page <= this.totalPages) {
@@ -203,9 +187,6 @@ export default {
 </script>
   
 <style scoped>
-.selezionato{
-  border: 2px solid yellow;
-}
 .page-link {
   color: black;
   border: 1px solid red;
@@ -219,14 +200,6 @@ export default {
 
 .main {
   margin-top: 87px;
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
 }
 
 .expand-button {
@@ -258,41 +231,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 5px;
-}
-
-.pagination-buttons {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.list-group-item {
-  background-color: lightpink;
-}
-
-.pagination-button {
-  background-color: #e50914;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  margin-right: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.search-input {
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 18px;
-  width: 87%;
-  border: none;
-  border-radius: 5px;
-}
-
-button.active {
-  background-color: #e50914;
-  font-weight: bold;
-  color: #fff;
 }
 
 @media (max-width: 1200px) {

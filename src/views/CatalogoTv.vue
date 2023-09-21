@@ -120,10 +120,10 @@ export default {
       }
     },
     toggleLanguage() {
-      if (this.$store.state.currentLanguage=='en') {
+      if (this.$store.state.currentLanguage == 'en') {
         this.$store.commit('setCurrentLanguage', 'it');
       }
-      else{
+      else {
         this.$store.commit('setCurrentLanguage', 'en');
       }
       this.fetchMovies();
@@ -195,14 +195,6 @@ export default {
   margin-top: 87px;
 }
 
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
-
 .expand-button {
   color: white;
 }
@@ -232,41 +224,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 5px;
-}
-
-.pagination-buttons {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.list-group-item {
-  background-color: lightpink;
-}
-
-.pagination-button {
-  background-color: #e50914;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  margin-right: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.search-input {
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 18px;
-  width: 87%;
-  border: none;
-  border-radius: 5px;
-}
-
-button.active {
-  background-color: #e50914;
-  font-weight: bold;
-  color: #fff;
 }
 
 @media (max-width: 1200px) {
