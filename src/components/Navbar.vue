@@ -1,11 +1,11 @@
 <template>
   <nav class="navbar navbar-expand-md bg-dark navbar">
     <div class="container-fluid" style="width: max-content;">
-      <router-link to="/homepage" class="navbar-link"
+      <button class="navbar-link"
         style="color: red; font-family: fantasy; font-size: xx-large; width: max-content; text-decoration: none;"
         @click="goToHomePage">
         {{ $t('appTitle') }}
-      </router-link>
+      </button>
     </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
       data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"

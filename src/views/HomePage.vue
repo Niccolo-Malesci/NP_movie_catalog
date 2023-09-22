@@ -59,7 +59,6 @@ export default {
         cambiaLingua() {
             if (this.$store.state.currentLanguage == 'en') {
                 this.$store.commit('setCurrentLanguage', 'it');
-                window.location.reload();
             }
             else {
                 this.$store.commit('setCurrentLanguage', 'en');
