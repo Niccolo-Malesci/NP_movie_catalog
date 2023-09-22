@@ -9,7 +9,7 @@
                     <input style="zoom: 1.5;" class="form-check-input" type="checkbox" :value="genere"
                         v-model="generiSelezionati">
                     <label style="color: white; font-size: 1.2em;" :for="'checkbox_' + genere">
-                        {{ $t(genere.toLowerCase()) }}
+                        {{ $t(genere) }}
                     </label>
                 </div>
             </div>
@@ -31,8 +31,8 @@ export default {
             generiSelezionati: [],
             nome: this.$store.state.nome_registrazione,
             generi: [
-                'azione', 'animazione', 'avventura', 'commedia', 'crime', 'documentario', 'dramma', 'famiglia',
-                'fantascienza', 'fantasy', 'guerra', 'horror', 'mistero', 'romance', 'storia', 'thriller'
+                'Azione', 'Animazione', 'Avventura', 'Commedia', 'Crime', 'Documentario', 'Dramma', 'Famiglia',
+                'Fantascienza', 'Fantasy', 'Guerra', 'Horror', 'Mistero', 'Romance', 'Storia', 'Thriller'
             ],
             linguaSelezionata: this.$store.state.currentLanguage,
         };
