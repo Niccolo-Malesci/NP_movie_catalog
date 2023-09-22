@@ -17,12 +17,12 @@
         <li class="nav-item">
           <button @click="linkFilm"
             :class="{ red: currentRoute === '/catalogo/film', white: currentRoute !== '/catalogo/film' }"
-            class="nav-link white">Film</button>
+            class="nav-link white">{{ $t('film') }}</button>
         </li>
         <li class="nav-item">
           <button @click="linkTv"
             :class="{ red: currentRoute === '/catalogo/tv', white: currentRoute !== '/catalogo/tv' }"
-            class="nav-link">Serie-TV</button>
+            class="nav-link">{{ $t('tv') }}</button>
         </li>
         <li class="nav-item dropdown">
           <button class="nav-link dropdown-toggle btn-sm language-button" type="button" id="languageDropdown"
