@@ -16,7 +16,7 @@ const messages = {
     language: 'Lingua',
     hello: 'Ciao',
     chooseGenres: 'Scegli i tuoi generi preferiti:',
-    preferiti: 'I tuoi generi prefriti verranno contrassegnati da "',
+    preferiti: 'I tuoi generi preferiti verranno contrassegnati da "',
     translateButton: 'Traduci',
     continueButton: 'Continua',
     azione: 'Azione',
