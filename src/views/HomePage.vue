@@ -2,6 +2,7 @@
     <div class="container">
         <h1 class="saluto">{{ $t('hello') }} {{ nome }}!</h1>
         <h2 class="presentazione">{{ $t('chooseGenres') }}</h2>
+        <h3 class="presentazione">{{ $t('preferiti') }}<i class="bi bi-arrow-through-heart-fill"></i>  "</h3>
         <div style="margin-left: 12%;" class="row align-items-start justify-content-center">
             <div style="margin-top: 3%;" v-for="genere in generi" :key="genere" class="col-md-3">
                 <div class="form-check">
