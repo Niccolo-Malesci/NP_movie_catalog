@@ -55,10 +55,16 @@ export default {
       currentPage: 1,
       totalPages: 1,
       searchQuery: '',
+      savedScrollPosition: 0,
     };
   },
   mounted() {
     this.fetchMovies();
+    this.scrollToSavedPosition();
+  },
+  beforeRouteLeave(to, from, next) {
+    this.saveScrollPosition();
+    next();
   },
   methods: {
     goToPage(page) {
@@ -112,6 +118,12 @@ export default {
       if (movieList) {
         movieList.scrollIntoView({ behavior: "smooth" });
       }
+    },
+    saveScrollPosition() {
+      this.savedScrollPosition = window.scrollY;
+    },
+    scrollToSavedPosition() {
+      window.scrollTo(0, this.savedScrollPosition);
     },
     toggleLanguage() {
       if (this.$store.state.currentLanguage == 'en') {

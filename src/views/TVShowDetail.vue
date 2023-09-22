@@ -4,6 +4,11 @@
         <MediaDetailCard :media="tvShow" />
         <MediaCarousel :chunkedRecommendedMedia="chunkedRecommendedTvShows" :currentSlideIndex="currentSlideIndex"
             currentCategory="tv" />
+        <div class="back-button">
+            <router-link :to="{ name: 'catalogo-tv' }">
+                <span class="icon">&#8592;</span> {{ $t('goBack') }}
+            </router-link>
+        </div>
     </div>
 </template>
   
@@ -41,7 +46,16 @@ export default {
             immediate: true,
         },
     },
+    mounted() {
+        this.scrollToSavedPosition();
+    },
     methods: {
+        saveScrollPosition() {
+            this.savedScrollPosition = window.scrollY;
+        },
+        scrollToSavedPosition() {
+            window.scrollTo(0, this.savedScrollPosition);
+        },
         async fetchGetTvShow() {
             const tvShowId = this.$route.params.id;
             const tvShowUrl = `https://api.themoviedb.org/3/tv/${tvShowId}?api_key=${this.apiKey}&language=${this.$store.state.currentLanguage}`;
@@ -89,4 +103,15 @@ export default {
 .main {
     margin-top: 87px;
 }
+
+.back-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.icon {
+    font-size: 24px;
+    margin-right: 5px;
+}
 </style>
+  
