@@ -43,7 +43,7 @@
     </ul>
   </div>
 </template>
-  
+
 <script>
 import axios from 'axios';
 import Navbar from '../components/Navbar.vue';
@@ -56,17 +56,36 @@ export default {
       totalPages: 1,
       searchQuery: '',
       currentCategory: 'movie',
+      savedScrollPosition: 0,
+      returnFromDetail: false,
     };
   },
   mounted() {
     this.$route.query.type;
-    console.log(this.$route.query.type);
     if (this.$route.query.type == 'tv') {
       this.currentCategory = 'tv';
     }
     this.fetchMovies();
+    this.restoreScrollPosition();
+  },
+  beforeRouteLeave(to, from, next) {
+    if (to.name === 'dettaglioTV' && this.returnFromDetail) {
+      this.returnFromDetail = false;
+      next();
+    } else {
+      this.saveScrollPosition();
+      next();
+    }
   },
   methods: {
+    saveScrollPosition() {
+      this.savedScrollPosition = window.scrollY;
+    },
+    restoreScrollPosition() {
+      if (this.savedScrollPosition > 0) {
+        window.scrollTo(0, this.savedScrollPosition);
+      }
+    },
     goToPage(page) {
       if (page >= 1 && page <= this.totalPages) {
         this.currentPage = page;
@@ -151,7 +170,6 @@ export default {
       movie.expandedDescription = !movie.expandedDescription;
     },
     handleSearchInput() {
-      console.log("Ricerca in corso con query:", this.searchQuery);
       if (this.searchQuery.length >= 2) {
         this.currentPage = 1;
         this.fetchMovies();
@@ -175,10 +193,10 @@ export default {
       this.fetchMovies();
     },
   },
-  components: { Navbar }
+  components: { Navbar },
 };
 </script>
-  
+
 <style scoped>
 .page-link {
   color: black;
