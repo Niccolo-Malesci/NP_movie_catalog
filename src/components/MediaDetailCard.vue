@@ -9,8 +9,12 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title" style="font-size: xx-large; text-align: center;">
+                    <h5 v-if="!ricercaGenere(media.genres.map(genere => genere.name))" class="card-title"
+                        style="font-size: xx-large; text-align: center;">
                         {{ media.title || media.name }}
+                    </h5>
+                    <h5 v-else class="card-title" style="font-size: xx-large; text-align: center;">
+                        {{ media.title || media.name }} <i class="bi bi-arrow-through-heart-fill"></i>
                     </h5>
                     <p class="card-text" style="font-weight: bold;">{{ media.tagline }}</p>
                     <p>{{ media.overview }}</p>
@@ -90,9 +94,7 @@
                         <i class="bi bi-star-fill" style="color: yellow;"></i>
                     </p>
                     <p>{{ $t('mediaDetails.popularity') }}: {{ media.popularity }}</p>
-                    <p v-if="!ricercaGenere(media.genres.map(genere => genere.name))" style="font-weight: bold;">{{
-                        getGenres(media.genres) }}</p>
-                    <p v-else style="color: yellow;">{{
+                    <p style="font-weight: bold;">{{
                         getGenres(media.genres) }}</p>
                     <p v-if="media.title" class="card-text"
                         style="color: white; position: absolute; bottom: 0; right: 0; margin: 10px;">
@@ -126,14 +128,7 @@ export default {
             console.log('Generi Puliti:', generiPuliti);
             console.log('Generi del Media:', g);
 
-            for (let j = 0; j < g.length; j++) {
-                if (generiPuliti.includes(g[j])) {
-                    console.log('Match trovato:', g[j]);
-                    return true;
-                }
-            }
-            console.log('Nessun match trovato');
-            return false;
+            return g.some(genere => generiPuliti.includes(genere));
         },
         getMediaPosterUrl(posterPath) {
             if (!posterPath) {
