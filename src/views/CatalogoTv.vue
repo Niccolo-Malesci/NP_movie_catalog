@@ -68,16 +68,11 @@ export default {
     this.fetchMovies();
     this.restoreScrollPosition();
   },
-  beforeRouteLeave(to, from, next) {
-    if (to.name === 'dettaglioTV' && this.returnFromDetail) {
-      this.returnFromDetail = false;
-      next();
-    } else {
+  methods: {
+    beforeRouteLeave(to, from, next) {
       this.saveScrollPosition();
       next();
-    }
-  },
-  methods: {
+    },
     saveScrollPosition() {
       this.savedScrollPosition = window.scrollY;
     },

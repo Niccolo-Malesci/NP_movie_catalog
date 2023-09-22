@@ -26,6 +26,7 @@ export default {
             chunkedRecommendedTvShows: [],
             currentSlideIndex: 0,
             chunkSize: 5,
+            savedScrollPosition: 0,
         };
     },
     async created() {
@@ -50,11 +51,20 @@ export default {
         this.scrollToSavedPosition();
     },
     methods: {
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                if (vm.savedScrollPosition > 0) {
+                    window.scrollTo(0, vm.savedScrollPosition);
+                }
+            });
+        },
         saveScrollPosition() {
             this.savedScrollPosition = window.scrollY;
         },
         scrollToSavedPosition() {
-            window.scrollTo(0, this.savedScrollPosition);
+            if (this.savedScrollPosition > 0) {
+                window.scrollTo(0, this.savedScrollPosition);
+            }
         },
         async fetchGetTvShow() {
             const tvShowId = this.$route.params.id;
